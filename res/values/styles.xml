@@ -19,7 +19,7 @@
     
     <!-- 自定义导航栏样式 -->
     <style name="main_tab_top">
-        <item name="android:textSize">20.0sp</item>
+        <item name="android:textSize">18.0sp</item>
         <item name="android:textColor">@color/balck</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:padding">5dip</item>
