@@ -1,9 +1,7 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
 
     <RadioGroup 
         android:id="@+id/music_taball"
@@ -27,7 +25,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             style="@style/main_tab_top"
-            android:checked="true"
             android:text="@string/muzikland"
             android:drawableBottom="@drawable/music_tab"
             android:textColor="@color/tab_color"/>
@@ -37,7 +34,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             style="@style/main_tab_top"
-            android:checked="true"
             android:text="@string/search"
             android:drawableBottom="@drawable/music_tab"
             android:textColor="@color/tab_color"/>
@@ -47,7 +43,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             style="@style/main_tab_top"
-            android:checked="true"
             android:text="@string/me"
             android:drawableBottom="@drawable/music_tab"
             android:textColor="@color/tab_color"/>
@@ -56,8 +51,8 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
     </android.support.v4.view.ViewPager>
     
 
-</RelativeLayout>
+</LinearLayout>

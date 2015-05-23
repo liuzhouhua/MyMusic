@@ -6,15 +6,12 @@ import java.util.List;
 import com.example.mymusic.adapter.MainPageAdapter;
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
-import android.view.Menu;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -42,12 +39,6 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
      */
     private void initview(){
     	topTab = (ViewPager) findViewById(R.id.pager);
-    	radioGroupForTopTab = (RadioGroup) findViewById(R.id.music_taball);
-    	newest = (RadioButton) findViewById(R.id.newest);
-    	muzikland = (RadioButton) findViewById(R.id.muzikland);
-    	search = (RadioButton) findViewById(R.id.search);
-    	me = (RadioButton) findViewById(R.id.me);
-    	
     	fragments = new ArrayList<Fragment>();
     	fragments.add(new NewEstFragment());
     	fragments.add(new MuziklandFragment());
@@ -57,7 +48,12 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
     	topTab.setAdapter(adapter);
     	topTab.setOffscreenPageLimit(fragments.size()-1);
     	topTab.setOnPageChangeListener(this);
-    	
+    		
+    	radioGroupForTopTab = (RadioGroup) findViewById(R.id.music_taball);
+    	newest = (RadioButton) findViewById(R.id.newest);
+    	muzikland = (RadioButton) findViewById(R.id.muzikland);
+    	search = (RadioButton) findViewById(R.id.search);
+    	me = (RadioButton) findViewById(R.id.me);
     	radioGroupForTopTab.setOnCheckedChangeListener(this);
     }
 
@@ -82,7 +78,6 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
 
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkid) {
-		// TODO Auto-generated method stub
 		Log.i(TAG, "onCheckedChanged");
 		switch(checkid){
 		case R.id.newest:
