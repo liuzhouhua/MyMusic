@@ -15,5 +15,10 @@
     <string name="mymuzikland">我的歌单</string>
     <string name="title_default">欢迎来到我的音乐</string>
     <string name="artist_default">让音乐跟我走</string>
+    <string name="scan">扫描</string>
+    <string name="songs">音乐</string>
+    <string name="singer">歌手</string>
+    <string name="special">专辑</string>
+    <string name="folder">文件夹</string>
 
 </resources>

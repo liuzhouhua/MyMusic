@@ -1,6 +1,7 @@
 package com.example.mymusic;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -54,6 +55,8 @@ public class MeFragment extends Fragment implements OnClickListener{
 		case R.id.useravater:
 			break;
 		case R.id.localmusic:
+			Intent intent = new Intent(this.getActivity(),LocalMusicActivity.class);
+			startActivity(intent);
 			break;
 		case R.id.myfavor:
 			break;

@@ -11,11 +11,5 @@
         android:textSize="30sp"
         android:gravity="center"
         android:layout_weight="1"/>
-    
-    <com.example.mymusic.layout.MusicPlayer
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        
-    </com.example.mymusic.layout.MusicPlayer>
 
 </LinearLayout>

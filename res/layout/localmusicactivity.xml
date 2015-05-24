@@ -1,64 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-     >
+    android:orientation="vertical" >
+    
 
-    <RadioGroup 
+    <include layout="@layout/globaltitle"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:src="@drawable/line"
+        android:background="#ccced1"/>
+    
+     <RadioGroup 
         android:id="@+id/music_taball"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         
         <RadioButton 
-            android:id="@+id/newest"
+            android:id="@+id/songs"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             style="@style/main_tab_top"
             android:checked="true"
-            android:text="@string/newest"
+            android:text="@string/songs"
             android:drawableBottom="@drawable/music_tab"
             android:textColor="@color/tab_color"/>
         <RadioButton 
-            android:id="@+id/muzikland"
+            android:id="@+id/singer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             style="@style/main_tab_top"
-            android:text="@string/muzikland"
+            android:text="@string/singer"
             android:drawableBottom="@drawable/music_tab"
             android:textColor="@color/tab_color"/>
         <RadioButton 
-            android:id="@+id/search"
+            android:id="@+id/sepcial"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             style="@style/main_tab_top"
-            android:text="@string/search"
+            android:text="@string/special"
             android:drawableBottom="@drawable/music_tab"
             android:textColor="@color/tab_color"/>
         <RadioButton 
-            android:id="@+id/me"
+            android:id="@+id/folder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             style="@style/main_tab_top"
-            android:text="@string/me"
+            android:text="@string/folder"
             android:drawableBottom="@drawable/music_tab"
             android:textColor="@color/tab_color"/>
         
     </RadioGroup>
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
+    
+     <android.support.v4.view.ViewPager
+        android:id="@+id/pager_local"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-    </android.support.v4.view.ViewPager>
-    <com.example.mymusic.layout.MusicPlayer
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        
-    </com.example.mymusic.layout.MusicPlayer>
-
+    </android.support.v4.view.ViewPager>"
+    
 </LinearLayout>
