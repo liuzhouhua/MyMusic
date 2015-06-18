@@ -91,12 +91,16 @@ public final class R {
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int globaltitle=0x7f030001;
-        public static final int localmusicactivity=0x7f030002;
-        public static final int medioplayer_bar=0x7f030003;
-        public static final int mefragment=0x7f030004;
-        public static final int muziklandfragment=0x7f030005;
-        public static final int newestfragment=0x7f030006;
-        public static final int searchfragment=0x7f030007;
+        public static final int local_album_fragment=0x7f030002;
+        public static final int local_floder_fragment=0x7f030003;
+        public static final int local_music_fragment=0x7f030004;
+        public static final int local_singer_fragment=0x7f030005;
+        public static final int localmusicactivity=0x7f030006;
+        public static final int medioplayer_bar=0x7f030007;
+        public static final int mefragment=0x7f030008;
+        public static final int muziklandfragment=0x7f030009;
+        public static final int newestfragment=0x7f03000a;
+        public static final int searchfragment=0x7f03000b;
     }
     public static final class menu {
         public static final int main=0x7f080000;
