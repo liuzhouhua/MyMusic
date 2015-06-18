@@ -12,8 +12,9 @@ public final class R {
     }
     public static final class color {
         public static final int balck=0x7f040001;
+        public static final int buttongrey=0x7f040003;
         public static final int lightgrey=0x7f040002;
-        public static final int tab_color=0x7f040003;
+        public static final int tab_color=0x7f040004;
         public static final int white=0x7f040000;
     }
     public static final class dimen {
@@ -27,27 +28,31 @@ public final class R {
         public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
-        public static final int backgroud_play=0x7f020000;
-        public static final int background2_play=0x7f020001;
-        public static final int background_player_bar=0x7f020002;
-        public static final int default_album_s=0x7f020003;
-        public static final int default_cover=0x7f020004;
-        public static final int default_user=0x7f020005;
-        public static final int ic_folder_nor=0x7f020006;
-        public static final int ic_folder_press=0x7f020007;
-        public static final int ic_launcher=0x7f020008;
-        public static final int icon_back=0x7f020009;
-        public static final int icon_download=0x7f02000a;
-        public static final int icon_list_edit=0x7f02000b;
-        public static final int icon_menu_add_queue=0x7f02000c;
-        public static final int icon_myfavor=0x7f02000d;
-        public static final int icon_mytrack=0x7f02000e;
-        public static final int line=0x7f02000f;
-        public static final int local_music=0x7f020010;
-        public static final int music_tab=0x7f020011;
-        public static final int player_next=0x7f020012;
-        public static final int player_play=0x7f020013;
-        public static final int red=0x7f020014;
+        public static final int backbutton=0x7f020000;
+        public static final int backgroud_play=0x7f020001;
+        public static final int background2_play=0x7f020002;
+        public static final int background_player_bar=0x7f020003;
+        public static final int default_album_s=0x7f020004;
+        public static final int default_cover=0x7f020005;
+        public static final int default_user=0x7f020006;
+        public static final int edit_text=0x7f020007;
+        public static final int ic_folder_nor=0x7f020008;
+        public static final int ic_folder_press=0x7f020009;
+        public static final int ic_launcher=0x7f02000a;
+        public static final int icon_back=0x7f02000b;
+        public static final int icon_back_white=0x7f02000c;
+        public static final int icon_download=0x7f02000d;
+        public static final int icon_list_edit=0x7f02000e;
+        public static final int icon_menu_add_queue=0x7f02000f;
+        public static final int icon_myfavor=0x7f020010;
+        public static final int icon_mytrack=0x7f020011;
+        public static final int line=0x7f020012;
+        public static final int local_music=0x7f020013;
+        public static final int music_tab=0x7f020014;
+        public static final int player_next=0x7f020015;
+        public static final int player_play=0x7f020016;
+        public static final int red=0x7f020017;
+        public static final int shadow_bottom=0x7f020018;
     }
     public static final class id {
         public static final int action_settings=0x7f09001f;

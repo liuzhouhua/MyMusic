@@ -7,13 +7,15 @@
     <RadioGroup 
         android:id="@+id/music_taball"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
         
         <RadioButton 
             android:id="@+id/newest"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
             android:layout_weight="1"
             style="@style/main_tab_top"
             android:checked="true"
@@ -24,6 +26,7 @@
             android:id="@+id/muzikland"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
             android:layout_weight="1"
             style="@style/main_tab_top"
             android:text="@string/muzikland"
@@ -33,6 +36,7 @@
             android:id="@+id/search"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
             android:layout_weight="1"
             style="@style/main_tab_top"
             android:text="@string/search"
@@ -42,6 +46,7 @@
             android:id="@+id/me"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
             android:layout_weight="1"
             style="@style/main_tab_top"
             android:text="@string/me"

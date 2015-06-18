@@ -5,9 +5,9 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.Button;
 
 public class LocalMusicActivity extends FragmentActivity implements OnClickListener{
-	
 	
 
 	@Override
@@ -19,7 +19,14 @@ public class LocalMusicActivity extends FragmentActivity implements OnClickListe
 	
 	@Override
 	public void onClick(View v) {
-		
+		switch (v.getId()) {
+		case R.id.songs:
+			
+			break;
+		case R.id.t
+		default:
+			break;
+		}
 	}
 
 }
