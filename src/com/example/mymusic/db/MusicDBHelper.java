@@ -12,7 +12,6 @@ import android.os.Environment;
 
 public class MusicDBHelper extends SQLiteOpenHelper{
 	
-
 	public MusicDBHelper(Context context, String name, CursorFactory factory,
 			int version) {
 		super(context, name, factory, version);
@@ -22,7 +21,8 @@ public class MusicDBHelper extends SQLiteOpenHelper{
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS " + DBConstant.TABLE_LOCALMUSIC
 				+ " ("+DBConstant.LOCAL_ID
-				+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + DBConstant.LOCAL_TITLE
+				+ " INTEGER PRIMARY KEY AUTOINCREMENT, "  + DBConstant.LOCAL_NAME
+				+ " TEXT UNIQUE NOT NULL, "+ DBConstant.LOCAL_TITLE
 				+ " TEXT UNIQUE NOT NULL, " + DBConstant.LOCAL_ARTIST + " TEXT, "
 				+ DBConstant.LOCAL_ALBUM + " TEXT, " + DBConstant.LOCAL_PATH
 				+ " TEXT NOT NULL, " + DBConstant.LOCAL_DURATION
@@ -53,15 +53,4 @@ public class MusicDBHelper extends SQLiteOpenHelper{
 		// TODO Auto-generated method stub
 		
 	}
-	
-//	public String getSDCardPath(){
-//		File sdDir = null;
-//		boolean isSDCardExist = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
-//		if(isSDCardExist){
-//			sdDir = Environment.getExternalStorageDirectory();
-//		}else{
-//			sdDir = Environment.getRootDirectory();
-//		}
-//		return sdDir.toString();
-//	}
 }

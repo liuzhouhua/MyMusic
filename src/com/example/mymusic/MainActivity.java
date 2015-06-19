@@ -4,15 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.mymusic.adapter.MainPageAdapter;
-import com.example.mymusic.constant.DBConstant;
-import com.example.mymusic.db.MusicDBHelper;
-
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -31,8 +23,6 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
 	private List<Fragment> fragments;
 	private RadioGroup radioGroupForTopTab;
 	private RadioButton newest,muzikland,search,me;
-	private MusicDBHelper dbHelper;
-	private SQLiteDatabase sb;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +31,6 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
         setContentView(R.layout.activity_main);
         //≥ı ºªØ
         initview();
-        initDataBase();
     }
 
     /**
@@ -67,31 +56,6 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
     	radioGroupForTopTab.setOnCheckedChangeListener(this);
     }
     
-    public void initDataBase(){
-    	dbHelper = new MusicDBHelper(this,DBConstant.DB_NAME , null, DBConstant.DB_VERSION);
-    	try{
-    		sb = dbHelper.getWritableDatabase();
-    	}catch(Exception e){
-    		Log.e(TAG, "DataBase create err");
-    	}
-    	Cursor cursor = this.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-    			null, null, null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
-    	Log.i(TAG, "cursor :"+cursor);
-    	cursor.moveToFirst();
-    	ContentValues contentValues = new ContentValues();
-    	for(int i = 0 ;i < cursor.getCount() ; i++){
-    		contentValues.put(DBConstant.LOCAL_TITLE, cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE)));
-    		contentValues.put(DBConstant.LOCAL_ALBUM, cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM)));
-    		contentValues.put(DBConstant.LOCAL_ARTIST, cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST)));
-    		contentValues.put(DBConstant.LOCAL_PATH, cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)));
-    		contentValues.put(DBConstant.LOCAL_DURATION, cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)));
-    		contentValues.put(DBConstant.LOCAL_FILE_SIZE, cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE)));
-//    		sb.insert(DBConstant.TABLE_LOCALMUSIC,null, contentValues);
-    		contentValues.clear();
-    		cursor.moveToNext();
-    	}
-    }
-
 	@Override
 	public void onPageScrollStateChanged(int arg0) {
 		// TODO Auto-generated method stub

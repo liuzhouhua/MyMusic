@@ -5,12 +5,11 @@
     android:orientation="vertical"
     android:gravity="center" >
     
-    <TextView 
-        android:layout_width="wrap_content"
+    <ListView 
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Local_Music"
-        android:layout_gravity="center"
-        android:textSize="20sp"/>
+        android:id="@+id/local_music_list">
+    </ListView>
     
 
 </LinearLayout>

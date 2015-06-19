@@ -1,8 +1,12 @@
 package com.example.mymusic.constant;
 
+import java.io.File;
+
+import com.example.mymusic.db.SDBHelper;
+
 public class DBConstant {
 	//数据库名字
-	public static final String DB_NAME = "SmallBoallsDataBase";
+	public static final String DB_NAME = SDBHelper.DB_DIR + File.separator + "SmallBoallsDataBase";
 	//数据库版本
 	public static final int DB_VERSION = 1;
 	//数据库表名
@@ -12,6 +16,7 @@ public class DBConstant {
 	public static final String TABLE_ALBUM = "album";
 	//相对应的列
 	public static final String LOCAL_ID = "_id";
+	public static final String LOCAL_NAME = "name";
 	public static final String LOCAL_TITLE = "title";
 	public static final String LOCAL_ARTIST = "artist";
 	public static final String LOCAL_ALBUM = "album";
