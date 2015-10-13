@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.mymusic.adapter.MainPageAdapter;
+import com.example.mymusic.constant.ApplicationContext;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -31,6 +33,7 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
         setContentView(R.layout.activity_main);
         //≥ı ºªØ
         initview();
+        initData();
     }
 
     /**
@@ -54,6 +57,10 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
     	search = (RadioButton) findViewById(R.id.search);
     	me = (RadioButton) findViewById(R.id.me);
     	radioGroupForTopTab.setOnCheckedChangeListener(this);
+    }
+    
+    private void initData(){
+    	ApplicationContext.getInstance().init(getApplicationContext());
     }
     
 	@Override

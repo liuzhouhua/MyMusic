@@ -1,6 +1,8 @@
 package com.example.mymusic;
 
 
+import com.example.mymusic.manager.MusicManager;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -47,6 +49,7 @@ public class MeFragment extends Fragment implements OnClickListener{
 		add_list.setOnClickListener(this);
 		edit_list.setOnClickListener(this);
 		
+		MusicManager.getInstance(getActivity()).scanSDCardMusic();
 	}
 	
 	@Override

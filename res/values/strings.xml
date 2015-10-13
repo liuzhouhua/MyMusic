@@ -20,5 +20,7 @@
     <string name="singer">歌手</string>
     <string name="special">专辑</string>
     <string name="folder">文件夹</string>
-
+    
+    <string name="sdcard_full_your_msg_can_not_display">SD卡空间已满，您的消息无法正常显示</string>
+	<string name="sdcard_full_app_cant_use_normal">SD卡空间已满，可能影响本软件的正常使用</string>
 </resources>

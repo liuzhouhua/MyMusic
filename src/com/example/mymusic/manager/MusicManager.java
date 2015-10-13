@@ -1,16 +1,35 @@
 package com.example.mymusic.manager;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.provider.MediaStore;
+
+import com.example.mymusic.constant.DBConstant;
+import com.example.mymusic.db.MusicDBHelper;
 
 public class MusicManager {
 	
 	private int local_music_count = 0;
 	private int myfavor_music_count = 0;
 	private int download_music_count = 0;
+	private static MusicManager instance = null;
+	private Context mContext;
+	private MusicDBHelper mDBHelper = null;
+	private Cursor cursor = null;
 	
 	public MusicManager(Context context) {
+		this.mContext = context;
+		mDBHelper = MusicDBHelper.getInstance(context, DBConstant.DB_NAME , null, DBConstant.DB_VERSION);
 	}
 
+	public static MusicManager getInstance(Context context){
+		if(instance==null){
+			instance = new MusicManager(context);
+		}
+		return instance;
+	}
+	
 	public int getLocal_music_count() {
 		return local_music_count;
 	}
@@ -34,4 +53,30 @@ public class MusicManager {
 	public void setDownload_music_count(int download_music_count) {
 		this.download_music_count = download_music_count;
 	}
+	
+	public void scanSDCardMusic(){
+		String selection = MediaStore.Audio.Media.DURATION +">30000";
+    	Cursor cursor = mContext.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+    			null, selection, null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
+    	cursor.moveToFirst();
+    	this.cursor = cursor;
+    	ContentValues contentValues = new ContentValues();
+    	do{
+    		contentValues.put(DBConstant.LOCAL_TITLE, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)));
+    		contentValues.put(DBConstant.LOCAL_ALBUM, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)));
+    		contentValues.put(DBConstant.LOCAL_ARTIST, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
+    		contentValues.put(DBConstant.LOCAL_PATH, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
+    		contentValues.put(DBConstant.LOCAL_DURATION, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)));
+    		contentValues.put(DBConstant.LOCAL_FILE_SIZE, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.SIZE)));
+    		contentValues.put(DBConstant.LOCAL_NAME, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME)));
+    		mDBHelper.insert(DBConstant.TABLE_LOCALMUSIC,contentValues);
+    		contentValues.clear();
+    	}while(cursor.moveToNext());
+	}
+
+	public Cursor getCursor() {
+		return cursor;
+	}
+	
+	
 }

@@ -124,6 +124,8 @@ public final class R {
         public static final int mymuzikland=0x7f06000b;
         public static final int newest=0x7f060002;
         public static final int scan=0x7f06000e;
+        public static final int sdcard_full_app_cant_use_normal=0x7f060014;
+        public static final int sdcard_full_your_msg_can_not_display=0x7f060013;
         public static final int search=0x7f060004;
         public static final int singer=0x7f060010;
         public static final int songs=0x7f06000f;

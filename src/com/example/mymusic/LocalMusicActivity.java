@@ -6,6 +6,7 @@ import java.util.List;
 import com.example.mymusic.adapter.LocalMusicPageAdapter;
 import com.example.mymusic.constant.DBConstant;
 import com.example.mymusic.db.MusicDBHelper;
+import com.example.mymusic.manager.MusicManager;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -36,8 +37,7 @@ public class LocalMusicActivity extends FragmentActivity implements OnPageChange
 	private Button mBackBtn,mScanBtn;
 	private List<Fragment> fragments;
 	private LocalMusicPageAdapter adapter;
-	private MusicDBHelper dbHelper;
-	private SQLiteDatabase sb;
+	private MusicManager mMusicManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,6 @@ public class LocalMusicActivity extends FragmentActivity implements OnPageChange
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.localmusicactivity);
 		initview();
-		initDataBase();
 	}
 	
 	public void initview(){
@@ -74,14 +73,6 @@ public class LocalMusicActivity extends FragmentActivity implements OnPageChange
 		
 	}
 	
-	public void initDataBase(){
-    	dbHelper = new MusicDBHelper(this,DBConstant.DB_NAME , null, DBConstant.DB_VERSION);
-    	try{
-    		sb = dbHelper.getWritableDatabase();
-    	}catch(Exception e){
-    		Log.e(TAG, "DataBase create error");
-    	}
-    }
 
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkid) {
@@ -151,29 +142,6 @@ public class LocalMusicActivity extends FragmentActivity implements OnPageChange
 			finish();
 			break;
 		case R.id.title_edit:
-			String selection = MediaStore.Audio.Media.DURATION +">30000";
-	    	Cursor cursor = getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-	    			null, selection, null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
-	    	cursor.moveToFirst();
-	    	ContentValues contentValues = new ContentValues();
-	    	do{
-	    		contentValues.put(DBConstant.LOCAL_TITLE, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)));
-	    		contentValues.put(DBConstant.LOCAL_ALBUM, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)));
-	    		contentValues.put(DBConstant.LOCAL_ARTIST, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
-	    		contentValues.put(DBConstant.LOCAL_PATH, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
-	    		contentValues.put(DBConstant.LOCAL_DURATION, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)));
-	    		contentValues.put(DBConstant.LOCAL_FILE_SIZE, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.SIZE)));
-	    		contentValues.put(DBConstant.LOCAL_NAME, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME)));
-	    		sb.insert(DBConstant.TABLE_LOCALMUSIC,null, contentValues);
-	    		contentValues.clear();
-	    		cursor.moveToNext();
-	    	}while(cursor.moveToNext());
-	    	
-	    	String[] From = {MediaStore.Audio.Media.TITLE,MediaStore.Audio.Media.ARTIST};
-	    	int[] To = {R.id.item_title,R.id.item_artist};
-	    	@SuppressWarnings("deprecation")
-			SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.music_list_item, cursor, From, To);
-	    	mLocalMusicTab.findViewById(R.id.local_music_list);
 		}
 	}
 
