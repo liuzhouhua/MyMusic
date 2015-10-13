@@ -12,24 +12,20 @@ public class MainPageAdapter extends FragmentPagerAdapter{
 	
 	public MainPageAdapter(FragmentManager fm) {
 		super(fm);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public MainPageAdapter(FragmentManager fm, List<Fragment> fragments) {
-		// TODO Auto-generated constructor stub
 		super(fm);
 		this.fragments = fragments;
 	}
 
 	@Override
 	public Fragment getItem(int arg0) {
-		// TODO Auto-generated method stub
 		return fragments.get(arg0);
 	}
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return fragments.size();
 	}
 

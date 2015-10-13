@@ -58,19 +58,16 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
     
 	@Override
 	public void onPageScrollStateChanged(int arg0) {
-		// TODO Auto-generated method stub
 		Log.i(TAG, "onPageScrollStateChanged");
 	}
 
 	@Override
 	public void onPageScrolled(int arg0, float arg1, int arg2) {
-		// TODO Auto-generated method stub
 		Log.i(TAG, "onPageScrolled");
 	}
 
 	@Override
 	public void onPageSelected(int arg0) {
-		// TODO Auto-generated method stub
 		Log.i(TAG, "onPageSelected");
 		getTagState(arg0);
 	}
