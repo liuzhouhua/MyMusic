@@ -57,17 +57,17 @@ public class MusicDBHelper extends SQLiteOpenHelper{
 				+ DBConstant.LOCAL_ALBUM_IMG_TITLE + " TEXT, "
 				+ DBConstant.LOCAL_ALBUM_IMG_PATH + " TEXT" +");");
 		
-		db.execSQL("CREATE¡¡TABLE IF NOT EXISTS " + DBConstant.TABLE_MYFAVOE
+		db.execSQL("CREATEï¿½ï¿½TABLE IF NOT EXISTS " + DBConstant.TABLE_MYFAVOE
 				+ " ("+DBConstant.FAVORITES_ID 
 				+ " INTEGER PRIMARY KEY AUTOINCREMENT," + DBConstant.FAVORITES_LOCAL_ID
 				+ " INTEGER UNIQUE NOT NULL);");
 		
-		db.execSQL("CREATE¡¡TABLE IF NOT EXISTS " + DBConstant.TABLE_ARTIST
+		db.execSQL("CREATEï¿½ï¿½TABLE IF NOT EXISTS " + DBConstant.TABLE_ARTIST
 				+ " ("+DBConstant.ARTIST_ID
 				+ " INTEGER PRIMARY KEY AUTOINCREMENT," + DBConstant.ARTIST_LOCAL_ARTIST
 				+ " TEXT UNIQUE NOT NULL);");
 		
-		db.execSQL("CREATE¡¡TABLE IF NOT EXISTS " + DBConstant.TABLE_ALBUM
+		db.execSQL("CREATEï¿½ï¿½TABLE IF NOT EXISTS " + DBConstant.TABLE_ALBUM
 				+ " ("+DBConstant.ALBUM_ID
 				+ " INTEGER PRIMARY KEY AUTOINCREMENT," + DBConstant.ALUBM_LOCAL_ALBUM
 				+ " TEXT UNIQUE NOT NULL);");
@@ -78,7 +78,7 @@ public class MusicDBHelper extends SQLiteOpenHelper{
 		
 	}
 	
-	//²åÈëÊý¾Ý
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public synchronized long insert(String tableName,ContentValues content){
 		if(database==null){
@@ -87,7 +87,7 @@ public class MusicDBHelper extends SQLiteOpenHelper{
 			}catch(SQLiteFullException e){
 				Log.e(TAG, "insert message encounter exception,in SQLiteFullException branch:"+e.getMessage());
 				e.printStackTrace();
-				Context context = ApplicationContext.getInstance().getContext();
+				Context context = ApplicationContext.getInstance().getmContext();
 				String SDPath = SDCardUtils.getSDCardPath();
 				File file = new File(SDPath);
 				if(SDPath==null||file==null||file.getUsableSpace()<Constant.LOW_CAPACITY_THRESHOLD){
@@ -96,7 +96,7 @@ public class MusicDBHelper extends SQLiteOpenHelper{
 				return -1;
 			}catch(SQLiteCantOpenDatabaseException e){
 				e.printStackTrace();
-				Context context = ApplicationContext.getInstance().getContext();
+				Context context = ApplicationContext.getInstance().getmContext();
 				String SDPath = SDCardUtils.getSDCardPath();
 				File file = new File(SDPath);
 				if(SDPath==null||file==null||file.getUsableSpace()<Constant.LOW_CAPACITY_THRESHOLD){
@@ -105,7 +105,7 @@ public class MusicDBHelper extends SQLiteOpenHelper{
 				return -1;
 			}catch(Exception e){
 				e.printStackTrace();
-				Context context = ApplicationContext.getInstance().getContext();
+				Context context = ApplicationContext.getInstance().getmContext();
 				String SDPath = SDCardUtils.getSDCardPath();
 				File file = new File(SDPath);
 				if(SDPath==null||file==null||file.getUsableSpace()<Constant.LOW_CAPACITY_THRESHOLD){

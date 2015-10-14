@@ -38,11 +38,16 @@ public class LocalMusicFragment extends Fragment implements OnClickListener{
     	int[] To = {R.id.item_title,R.id.item_artist};
 		adapter = new SimpleCursorAdapter(getActivity(), R.layout.music_list_item, MusicManager.getInstance(getActivity()).getCursor(), From, To);
 		mLocalMusiclist.setAdapter(adapter);
+		mLocalMusiclist.setOnClickListener(this);
 	}
 	
 	@Override
-	public void onClick(View arg0) {
-		
+	public void onClick(View v) {
+		switch(v.getId()){
+		case R.id.local_music_list:
+			
+			break;
+		}
 	}
 
 }
