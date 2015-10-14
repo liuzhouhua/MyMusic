@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.mymusic.adapter.LocalMusicPageAdapter;
+import com.example.mymusic.constant.Constant;
 import com.example.mymusic.constant.DBConstant;
 import com.example.mymusic.db.MusicDBHelper;
+import com.example.mymusic.event.RefreshLocalMusicFragmentEvent;
 import com.example.mymusic.manager.MusicManager;
+
+import de.greenrobot.event.EventBus;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -142,6 +146,15 @@ public class LocalMusicActivity extends FragmentActivity implements OnPageChange
 			finish();
 			break;
 		case R.id.title_edit:
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					MusicManager.getInstance(LocalMusicActivity.this).ScanSDCardMusic();
+					EventBus.getDefault().post(new RefreshLocalMusicFragmentEvent());
+				}
+			}).start();
+			break;
 		}
 	}
 

@@ -1,8 +1,10 @@
 package com.example.mymusic;
 
 
-import com.example.mymusic.manager.MusicManager;
+import com.example.mymusic.db.MusicDBHelper;
+import com.example.mymusic.event.RefreshLocalMusicFragmentEvent;
 
+import de.greenrobot.event.EventBus;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,6 +22,7 @@ public class MeFragment extends Fragment implements OnClickListener{
 	private TextView local_music_count,myfavor_music_count,download_music_count;
 	private ImageView add_list,edit_list;
 	private LinearLayout local_layout,myfavor_layout,download_layout;
+	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +44,11 @@ public class MeFragment extends Fragment implements OnClickListener{
 		
 		add_list = (ImageView) getActivity().findViewById(R.id.add_list_button);
 		edit_list = (ImageView) getActivity().findViewById(R.id.edit_list_button);
+		
+		local_music_count.setText(""+ MusicDBHelper.getInstance(getActivity()).queryLocalMusicCount()
+				+getActivity().getResources().getString(R.string.unit));
+		
+		EventBus.getDefault().register(this);
 		
 		avater.setOnClickListener(this);
 		local_layout.setOnClickListener(this);
@@ -73,4 +81,19 @@ public class MeFragment extends Fragment implements OnClickListener{
 		}
 	}
 
+	@Override
+	public void onStart() {
+		super.onStart();
+	}
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		EventBus.getDefault().unregister(this);
+	}
+	
+	public void onEventMainThread(RefreshLocalMusicFragmentEvent event){
+		local_music_count.setText(""+ MusicDBHelper.getInstance(getActivity()).queryLocalMusicCount()
+				+getActivity().getResources().getString(R.string.unit));
+	}
 }

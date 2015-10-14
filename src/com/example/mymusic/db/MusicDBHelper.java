@@ -33,8 +33,7 @@ public class MusicDBHelper extends SQLiteOpenHelper{
 		super(context, name, factory, version);
 	}
 	
-	public synchronized static MusicDBHelper getInstance(Context context, String name, CursorFactory factory,
-			int version){
+	public synchronized static MusicDBHelper getInstance(Context context){
 		if(instance==null){
 			instance = new MusicDBHelper(context,DBConstant.DB_NAME , null, DBConstant.DB_VERSION);
 		}
@@ -57,20 +56,20 @@ public class MusicDBHelper extends SQLiteOpenHelper{
 				+ DBConstant.LOCAL_ALBUM_IMG_TITLE + " TEXT, "
 				+ DBConstant.LOCAL_ALBUM_IMG_PATH + " TEXT" +");");
 		
-		db.execSQL("CREATE��TABLE IF NOT EXISTS " + DBConstant.TABLE_MYFAVOE
-				+ " ("+DBConstant.FAVORITES_ID 
-				+ " INTEGER PRIMARY KEY AUTOINCREMENT," + DBConstant.FAVORITES_LOCAL_ID
-				+ " INTEGER UNIQUE NOT NULL);");
-		
-		db.execSQL("CREATE��TABLE IF NOT EXISTS " + DBConstant.TABLE_ARTIST
-				+ " ("+DBConstant.ARTIST_ID
-				+ " INTEGER PRIMARY KEY AUTOINCREMENT," + DBConstant.ARTIST_LOCAL_ARTIST
-				+ " TEXT UNIQUE NOT NULL);");
-		
-		db.execSQL("CREATE��TABLE IF NOT EXISTS " + DBConstant.TABLE_ALBUM
-				+ " ("+DBConstant.ALBUM_ID
-				+ " INTEGER PRIMARY KEY AUTOINCREMENT," + DBConstant.ALUBM_LOCAL_ALBUM
-				+ " TEXT UNIQUE NOT NULL);");
+//		db.execSQL("CREATE��TABLE IF NOT EXISTS " + DBConstant.TABLE_MYFAVOE
+//				+ " ("+DBConstant.FAVORITES_ID 
+//				+ " INTEGER PRIMARY KEY AUTOINCREMENT," + DBConstant.FAVORITES_LOCAL_ID
+//				+ " INTEGER UNIQUE NOT NULL);");
+//		
+//		db.execSQL("CREATE��TABLE IF NOT EXISTS " + DBConstant.TABLE_ARTIST
+//				+ " ("+DBConstant.ARTIST_ID
+//				+ " INTEGER PRIMARY KEY AUTOINCREMENT," + DBConstant.ARTIST_LOCAL_ARTIST
+//				+ " TEXT UNIQUE NOT NULL);");
+//		
+//		db.execSQL("CREATE��TABLE IF NOT EXISTS " + DBConstant.TABLE_ALBUM
+//				+ " ("+DBConstant.ALBUM_ID
+//				+ " INTEGER PRIMARY KEY AUTOINCREMENT," + DBConstant.ALUBM_LOCAL_ALBUM
+//				+ " TEXT UNIQUE NOT NULL);");
 	}
 
 	@Override
@@ -78,9 +77,25 @@ public class MusicDBHelper extends SQLiteOpenHelper{
 		
 	}
 	
-	//��������
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public synchronized long insert(String tableName,ContentValues content){
+		if(database==null){
+			database = getDatabase();
+		}
+		return database.insert(tableName, null, content);
+	}
+	
+	public synchronized int queryLocalMusicCount(){
+		if(database==null){
+			database = getDatabase();
+		}
+		if(database!=null){
+			return database.query(DBConstant.TABLE_LOCALMUSIC, null, null, null, null, null, null).getCount();
+		}
+		return 0;
+	}
+	
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	public synchronized SQLiteDatabase getDatabase(){
 		if(database==null){
 			try{
 				database = getWritableDatabase();
@@ -93,7 +108,7 @@ public class MusicDBHelper extends SQLiteOpenHelper{
 				if(SDPath==null||file==null||file.getUsableSpace()<Constant.LOW_CAPACITY_THRESHOLD){
 					Toast.makeText(context, context.getString(R.string.sdcard_full_your_msg_can_not_display), Toast.LENGTH_SHORT).show();
 				}
-				return -1;
+				return null;
 			}catch(SQLiteCantOpenDatabaseException e){
 				e.printStackTrace();
 				Context context = ApplicationContext.getInstance().getmContext();
@@ -102,7 +117,7 @@ public class MusicDBHelper extends SQLiteOpenHelper{
 				if(SDPath==null||file==null||file.getUsableSpace()<Constant.LOW_CAPACITY_THRESHOLD){
 					Toast.makeText(context, context.getString(R.string.sdcard_full_app_cant_use_normal), Toast.LENGTH_SHORT).show();
 				}
-				return -1;
+				return null;
 			}catch(Exception e){
 				e.printStackTrace();
 				Context context = ApplicationContext.getInstance().getmContext();
@@ -111,9 +126,9 @@ public class MusicDBHelper extends SQLiteOpenHelper{
 				if(SDPath==null||file==null||file.getUsableSpace()<Constant.LOW_CAPACITY_THRESHOLD){
 					Toast.makeText(context, context.getString(R.string.sdcard_full_app_cant_use_normal), Toast.LENGTH_SHORT).show();
 				}
-				return -1;
+				return null;
 			}
 		}
-		return database.insert(tableName, null, content);
+		return database;
 	}
 }

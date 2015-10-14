@@ -1,8 +1,14 @@
 package com.example.mymusic;
 
-import com.example.mymusic.manager.MusicManager;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.example.mymusic.db.MusicDBHelper;
+import com.example.mymusic.event.RefreshLocalMusicFragmentEvent;
 import com.example.mymusic.service.BackGroundService;
 import com.example.mymusic.service.BackGroundService.PlayAndStopMusic;
+
+import de.greenrobot.event.EventBus;
 
 import android.annotation.SuppressLint;
 import android.content.ComponentName;
@@ -17,10 +23,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
@@ -30,9 +36,11 @@ public class LocalMusicFragment extends Fragment{
 	private static final String TAG = "LocalMusicFragment";
 
 	public ListView mLocalMusiclist;
+	private ImageView mImageView;
 	public SimpleCursorAdapter adapter;
 	private Cursor mCursor;
 	private BackGroundService.PlayAndStopMusic playAndStopMusicBinder;
+	private List<String> mMusicUri = new ArrayList<String>();
 	
 	private ServiceConnection connection = new ServiceConnection() {
 		
@@ -51,6 +59,10 @@ public class LocalMusicFragment extends Fragment{
 	public ListView getmLocalMusiclist() {
 		return mLocalMusiclist;
 	}
+	
+	public LocalMusicFragment(){
+	}
+	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,27 +75,65 @@ public class LocalMusicFragment extends Fragment{
 		super.onActivityCreated(savedInstanceState);
 		Intent service = new Intent(getActivity(), BackGroundService.class);
 		getActivity().bindService(service, connection, getActivity().BIND_AUTO_CREATE);
-		mCursor = MusicManager.getInstance(getActivity()).getCursorForscanSDCardMusic();
 		mLocalMusiclist = (ListView) getActivity().findViewById(R.id.local_music_list);
-		String[] From = {MediaStore.Audio.Media.TITLE,MediaStore.Audio.Media.ARTIST};
-    	int[] To = {R.id.item_title,R.id.item_artist};
-		adapter = new SimpleCursorAdapter(getActivity(), R.layout.music_list_item, mCursor, From, To,CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
-		mLocalMusiclist.setAdapter(adapter);
-		mLocalMusiclist.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				Log.d(TAG, "position :"+position+" id :"+id);
-				String itemUri = MusicManager.getInstance(getActivity()).getmMusicUri().get(position);
-				Log.d(TAG, "uri :"+itemUri);
-				if(playAndStopMusicBinder!=null){
-					playAndStopMusicBinder.playMusic(itemUri);
-				}
+		mImageView = (ImageView) getActivity().findViewById(R.id.no_music_image);
+		if(MusicDBHelper.getInstance(getActivity()).queryLocalMusicCount()<=0){
+			mLocalMusiclist.setVisibility(View.GONE);
+			mImageView.setVisibility(View.VISIBLE);
+		}else{
+			mImageView.setVisibility(View.GONE);
+			mLocalMusiclist.setVisibility(View.VISIBLE);
+		}
+			String selection = MediaStore.Audio.Media.DURATION +">30000";
+			mCursor = getActivity().getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+					null, selection, null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
+			String[] From = {MediaStore.Audio.Media.TITLE,MediaStore.Audio.Media.ARTIST};
+			int[] To = {R.id.item_title,R.id.item_artist};
+			adapter = new SimpleCursorAdapter(getActivity(), R.layout.music_list_item, mCursor, From, To,CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+			mLocalMusiclist.setAdapter(adapter);
+			
+			while(mCursor.moveToNext()){
+				mMusicUri.add(mCursor.getString(mCursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
 			}
 			
-		});
+			mLocalMusiclist.setOnItemClickListener(new OnItemClickListener() {
+				
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					Log.d(TAG, "position :"+position+" id :"+id);
+					String itemUri = mMusicUri.get(position);
+					Log.d(TAG, "itemUri :"+itemUri);
+					if(playAndStopMusicBinder!=null){
+						playAndStopMusicBinder.playMusic(itemUri);
+					}
+				}
+				
+			});
+			
+			EventBus.getDefault().register(this);
+		
 	}
 	
-
+	@Override
+	public void onStart() {
+		super.onStart();
+	}
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		EventBus.getDefault().unregister(this);
+	}
+	
+	public void onEventMainThread(RefreshLocalMusicFragmentEvent event){
+		if(MusicDBHelper.getInstance(getActivity()).queryLocalMusicCount()<=0){
+			mLocalMusiclist.setVisibility(View.GONE);
+			mImageView.setVisibility(View.VISIBLE);
+		}else{
+			mImageView.setVisibility(View.GONE);
+			mLocalMusiclist.setVisibility(View.VISIBLE);
+		}
+	}
+	
 }
