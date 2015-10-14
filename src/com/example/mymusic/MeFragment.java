@@ -49,7 +49,6 @@ public class MeFragment extends Fragment implements OnClickListener{
 		add_list.setOnClickListener(this);
 		edit_list.setOnClickListener(this);
 		
-		MusicManager.getInstance(getActivity()).scanSDCardMusic();
 	}
 	
 	@Override

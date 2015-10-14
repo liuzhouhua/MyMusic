@@ -1,5 +1,8 @@
 package com.example.mymusic.manager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -16,7 +19,7 @@ public class MusicManager {
 	private static MusicManager instance = null;
 	private Context mContext;
 	private MusicDBHelper mDBHelper = null;
-	private Cursor cursor = null;
+	private List<String> mMusicUri = new ArrayList<String>();
 	
 	public MusicManager(Context context) {
 		this.mContext = context;
@@ -54,17 +57,18 @@ public class MusicManager {
 		this.download_music_count = download_music_count;
 	}
 	
-	public void scanSDCardMusic(){
+	public Cursor getCursorForscanSDCardMusic(){
 		String selection = MediaStore.Audio.Media.DURATION +">30000";
     	Cursor cursor = mContext.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
     			null, selection, null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
     	cursor.moveToFirst();
-    	this.cursor = cursor;
+    	mMusicUri.clear();
     	ContentValues contentValues = new ContentValues();
     	do{
     		contentValues.put(DBConstant.LOCAL_TITLE, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)));
     		contentValues.put(DBConstant.LOCAL_ALBUM, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)));
     		contentValues.put(DBConstant.LOCAL_ARTIST, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
+    		mMusicUri.add(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
     		contentValues.put(DBConstant.LOCAL_PATH, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
     		contentValues.put(DBConstant.LOCAL_DURATION, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)));
     		contentValues.put(DBConstant.LOCAL_FILE_SIZE, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.SIZE)));
@@ -72,11 +76,12 @@ public class MusicManager {
     		mDBHelper.insert(DBConstant.TABLE_LOCALMUSIC,contentValues);
     		contentValues.clear();
     	}while(cursor.moveToNext());
+    	return cursor;
 	}
 
-	public Cursor getCursor() {
-		return cursor;
+	public List<String> getmMusicUri() {
+		return mMusicUri;
 	}
-	
+
 	
 }
