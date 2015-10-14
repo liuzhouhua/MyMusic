@@ -49,9 +49,7 @@ public class BackGroundService extends Service {
 				mPlayer = new MediaPlayer();
 			}
 			try {
-				if(mPlayer.isPlaying()){
-					mPlayer.reset();
-				}
+				mPlayer.reset();
 				mPlayer.setDataSource(uri);
 				mPlayer.prepare();
 				mPlayer.start();
