@@ -73,7 +73,7 @@ public class LocalMusicActivity extends FragmentActivity implements OnPageChange
 		mBackBtn = (Button) findViewById(R.id.titile_back);
 		mScanBtn = (Button) findViewById(R.id.title_edit);
 		mBackBtn.setOnClickListener(this);
-		mScanBtn.setOnClickListener(this);
+		mScanBtn.setOnClickListener(this);//
 		
 	}
 	
