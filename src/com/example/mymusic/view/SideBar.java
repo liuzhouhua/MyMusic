@@ -117,7 +117,6 @@ public class SideBar extends View {
 		public void onTouchingLetterChanged(String s);
 	}
 
-
 	public void setOnTouchingLetterChangedListener(
 			OnTouchingLetterChangedListener onTouchingLetterChangedListener) {
 		this.onTouchingLetterChangedListener = onTouchingLetterChangedListener;
@@ -138,7 +137,6 @@ public class SideBar extends View {
    public void setTextView(TextView textView) {
 	   this.textView = textView;
    }
-
 
    //设置listview滚动时候调用它 
    public void setColorWhenListViewScrolling(int c){
