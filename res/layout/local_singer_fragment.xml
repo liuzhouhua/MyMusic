@@ -17,11 +17,23 @@
         
     </ListView>
     
+    <TextView 
+        android:id="@+id/local_singer_letter"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:alpha="0.6"
+        android:background="@drawable/tips_popup_win_bg"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        android:visibility="invisible"/>
+    
     <com.example.mymusic.view.SideBar 
         android:id="@+id/local_singer_sidebar"
         android:layout_width="20dp"
         android:layout_height="match_parent"
-        android:layout_gravity="right"/>
+        android:layout_gravity="right|center"/>
     </FrameLayout>
     
 
