@@ -5,16 +5,16 @@ import java.io.File;
 import com.example.mymusic.db.SDBHelper;
 
 public class DBConstant {
-	//Êý¾Ý¿âÃû×Ö
+	//ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½
 	public static final String DB_NAME = SDBHelper.DB_DIR + File.separator + "SmallBoallsDataBase";
-	//Êý¾Ý¿â°æ±¾
-	public static final int DB_VERSION = 1;
-	//Êý¾Ý¿â±íÃû
+	//ï¿½ï¿½ï¿½Ý¿ï¿½æ±¾
+	public static final int DB_VERSION = 2;
+	//ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½
 	public static final String TABLE_LOCALMUSIC = "localmusic";
 	public static final String TABLE_MYFAVOE = "myfavor";
 	public static final String TABLE_ARTIST = "artist";
 	public static final String TABLE_ALBUM = "album";
-	//Ïà¶ÔÓ¦µÄÁÐ
+	//ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
 	public static final String LOCAL_ID = "_id";
 	public static final String LOCAL_NAME = "name";
 	public static final String LOCAL_TITLE = "title";
@@ -29,9 +29,22 @@ public class DBConstant {
 	public static final String LOCAL_ALBUM_IMG_PATH = "album_img_path";
 	
 	public static final String ARTIST_ID = "_id";
-	public static final String ARTIST_LOCAL_ARTIST = "local_artist";
+	public static final String ARTIST_LOCAL_SINGER = "local_singer";
+	public static final String ARTIST_LOCAL_TITLE = "local_title";
+	public static final String ARTIST_LOCAL_PATH = "local_path";
+	public static final String ARTIST_LOCAL_PINYIN = "local_pinyin";
+	public static final String ARTIST_LOCAL_FIRSTLETTER = "local_firstletter";
+	
 	public static final String ALBUM_ID = "_id";
-	public static final String ALUBM_LOCAL_ALBUM = "local_album";
+	public static final String ALUBM_LOCAL_SINGER = "local_singer";
+	public static final String ALUBM_LOCAL_TITLE = "local_title";
+	public static final String ALUBM_LOCAL_PATH = "local_path";
+	public static final String ALUBM_LOCAL_ALBUMNAME = "local_albumname";
+	public static final String ALUBM_LOCAL_PINYIN = "local_pinyin";
+	public static final String ALUBM_LOCAL_FIRSTLETTER = "local_firstletter";
+	
 	public static final String FAVORITES_ID = "_id";
-	public static final String FAVORITES_LOCAL_ID = "local_id";
+	public static final String FAVORITES_LOCAL_TITLE = "local_favorite_title";
+	public static final String FAVORITES_LOCAL_SINGER = "local_favorite_singer";
+	public static final String FAVORITES_LOCAL_PATH = "local_favorite_path";
 }

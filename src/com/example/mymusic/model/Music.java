@@ -7,7 +7,9 @@ public class Music {
 	private String mMusicAlbum;
 	private String mMusicUrl;
 	private String mLetterofSinger;
+	private String mPinYinofSinger;
 	private String mLetterofAlbum;
+	private String mPinYinofAlbum;
 	public String getmMusicName() {
 		return mMusicName;
 	}
@@ -43,6 +45,18 @@ public class Music {
 	}
 	public void setmLetterofAlbum(String mLetterofAlbum) {
 		this.mLetterofAlbum = mLetterofAlbum;
+	}
+	public String getmPinYinofSinger() {
+		return mPinYinofSinger;
+	}
+	public void setmPinYinofSinger(String mPinYinofSinger) {
+		this.mPinYinofSinger = mPinYinofSinger;
+	}
+	public String getmPinYinofAlbum() {
+		return mPinYinofAlbum;
+	}
+	public void setmPinYinofAlbum(String mPinYinofAlbum) {
+		this.mPinYinofAlbum = mPinYinofAlbum;
 	}
 	
 }
