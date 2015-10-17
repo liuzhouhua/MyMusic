@@ -1,6 +1,9 @@
 package com.example.mymusic.db;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.example.mymusic.R;
 import com.example.mymusic.constant.ApplicationContext;
 import com.example.mymusic.constant.Constant;
@@ -180,5 +183,31 @@ public class MusicDBHelper extends SQLiteOpenHelper{
 			}
 		}
 		return object;
+	}
+	
+	public synchronized <T> List<T> queryForList(RowMapper<T> rowMapper, String sql,
+			String[] args){
+		SQLiteDatabase dataBase = null;
+
+		Cursor cursor = null;
+		List<T> list = null;
+		try {
+			dataBase = getReadableDatabase();
+			cursor = dataBase.rawQuery(sql, args);
+			list = new ArrayList<T>();
+			if (cursor.moveToNext()) {
+				if(rowMapper.mapRow(cursor, cursor.getCount())!=null){
+					list.add(rowMapper.mapRow(cursor, cursor.getPosition()));
+				}
+			}
+			cursor.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{
+			if(cursor != null && !cursor.isClosed()){
+				cursor.close();
+			}
+		}
+		return list;
 	}
 }
