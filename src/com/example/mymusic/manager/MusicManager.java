@@ -60,7 +60,7 @@ public class MusicManager {
 		this.download_music_count = download_music_count;
 	}
 	
-	public void ScanSDCardMusic(){
+	public int ScanSDCardMusic(){
 		String selection = MediaStore.Audio.Media.DURATION +">30000";
     	Cursor cursor = mContext.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
     			null, selection, null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
@@ -113,6 +113,8 @@ public class MusicManager {
     		contentValues2.clear();
     		contentValues3.clear();
     	}while(cursor.moveToNext());
+    	
+    	return 0;
 	}
 
 	public  List<Music> getSingerMusicFromDB(String signer){

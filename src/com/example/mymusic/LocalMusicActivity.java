@@ -12,9 +12,11 @@ import com.example.mymusic.manager.MusicManager;
 
 import de.greenrobot.event.EventBus;
 
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -42,6 +44,7 @@ public class LocalMusicActivity extends FragmentActivity implements OnPageChange
 	private List<Fragment> fragments;
 	private LocalMusicPageAdapter adapter;
 	private MusicManager mMusicManager;
+	private ProgressDialog progressDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -146,14 +149,34 @@ public class LocalMusicActivity extends FragmentActivity implements OnPageChange
 			finish();
 			break;
 		case R.id.title_edit:
-			new Thread(new Runnable() {
+			AsyncTask<Void, Void, Boolean> task = new AsyncTask<Void, Void, Boolean>() {
+
+				@Override
+				protected void onPreExecute() {
+					super.onPreExecute();
+					progressDialog = new ProgressDialog(LocalMusicActivity.this);
+					progressDialog.setCancelable(false);
+					progressDialog.setMessage(getString(R.string.import_music));
+					progressDialog.show();
+				}
 				
 				@Override
-				public void run() {
-					MusicManager.getInstance(LocalMusicActivity.this).ScanSDCardMusic();
-					EventBus.getDefault().post(new RefreshLocalMusicFragmentEvent());
+				protected Boolean doInBackground(Void... params) {
+					int result = MusicManager.getInstance(LocalMusicActivity.this).ScanSDCardMusic();
+					return result==0;
 				}
-			}).start();
+				
+				@Override
+				protected void onPostExecute(Boolean result) {
+					super.onPostExecute(result);
+					progressDialog.dismiss();
+					if(result==true){
+						EventBus.getDefault().post(new RefreshLocalMusicFragmentEvent());
+					}
+				}
+				
+			};
+			task.execute();
 			break;
 		}
 	}

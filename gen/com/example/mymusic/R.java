@@ -125,6 +125,7 @@ public final class R {
         public static final int artist_default=0x7f06000d;
         public static final int download_music=0x7f06000a;
         public static final int folder=0x7f060012;
+        public static final int import_music=0x7f060016;
         public static final int local_music_count=0x7f060008;
         public static final int local_music_text=0x7f060006;
         public static final int me=0x7f060005;
