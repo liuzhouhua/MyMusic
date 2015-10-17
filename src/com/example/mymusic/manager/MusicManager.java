@@ -68,31 +68,47 @@ public class MusicManager {
     	ContentValues contentValues = new ContentValues();
     	ContentValues contentValues2 = new ContentValues();
     	ContentValues contentValues3 = new ContentValues();
+    	String path = "";
     	do{
     		contentValues.put(DBConstant.LOCAL_TITLE, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)));
     		contentValues.put(DBConstant.LOCAL_ALBUM, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)));
     		contentValues.put(DBConstant.LOCAL_ARTIST, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
-    		contentValues.put(DBConstant.LOCAL_PATH, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
+    		path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
     		contentValues.put(DBConstant.LOCAL_DURATION, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)));
     		contentValues.put(DBConstant.LOCAL_FILE_SIZE, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.SIZE)));
     		contentValues.put(DBConstant.LOCAL_NAME, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME)));
-    		mDBHelper.insert(DBConstant.TABLE_LOCALMUSIC,contentValues);
+    		if(mDBHelper.isDataExitsByPath(DBConstant.TABLE_LOCALMUSIC, DBConstant.LOCAL_PATH, path)){
+    			mDBHelper.update(DBConstant.TABLE_LOCALMUSIC, contentValues, DBConstant.LOCAL_PATH+"=?", new String[]{path});
+    		}else{
+    			contentValues.put(DBConstant.LOCAL_PATH, path);
+    			mDBHelper.insert(DBConstant.TABLE_LOCALMUSIC,contentValues);
+    		}
     		
     		contentValues2.put(DBConstant.ARTIST_LOCAL_TITLE, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)));
     		contentValues2.put(DBConstant.ARTIST_LOCAL_SINGER, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
-    		contentValues2.put(DBConstant.ARTIST_LOCAL_PATH, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
     		contentValues2.put(DBConstant.ARTIST_LOCAL_PINYIN, CharacterParser.getPingYin(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))));
     		contentValues2.put(DBConstant.ARTIST_LOCAL_FIRSTLETTER, CharacterParser.getPinYinFirstHeadChar(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))));
-    		mDBHelper.insert(DBConstant.TABLE_ARTIST, contentValues2);
+    		if(mDBHelper.isDataExitsByPath(DBConstant.TABLE_ARTIST, DBConstant.ARTIST_LOCAL_PATH, path)){
+    			mDBHelper.update(DBConstant.TABLE_ARTIST, contentValues2, DBConstant.ARTIST_LOCAL_PATH+"=?", new String[]{path});
+    		}else{
+    			contentValues2.put(DBConstant.ARTIST_LOCAL_PATH, path);
+    			mDBHelper.insert(DBConstant.TABLE_ARTIST,contentValues2);
+    		}
     		
     		contentValues3.put(DBConstant.ALUBM_LOCAL_TITLE, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)));
     		contentValues3.put(DBConstant.ALUBM_LOCAL_SINGER, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
     		contentValues3.put(DBConstant.ALUBM_LOCAL_ALBUMNAME, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)));
-    		contentValues3.put(DBConstant.ALUBM_LOCAL_PATH, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
+    		path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
     		contentValues3.put(DBConstant.ALUBM_LOCAL_PINYIN, CharacterParser.getPingYin(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM))));
     		contentValues3.put(DBConstant.ALUBM_LOCAL_FIRSTLETTER, CharacterParser.getPinYinFirstHeadChar(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM))));
-    		mDBHelper.insert(DBConstant.TABLE_ALBUM, contentValues3);
+    		if(mDBHelper.isDataExitsByPath(DBConstant.TABLE_ALBUM, DBConstant.ALUBM_LOCAL_PATH, path)){
+    			mDBHelper.update(DBConstant.TABLE_ALBUM, contentValues3, DBConstant.ALUBM_LOCAL_PATH+"=?", new String[]{path});
+    		}else{
+    			contentValues3.put(DBConstant.ALUBM_LOCAL_PATH, path);
+    			mDBHelper.insert(DBConstant.TABLE_ALBUM, contentValues3);
+    		}
     		
+    		path = "";
     		contentValues.clear();
     		contentValues2.clear();
     		contentValues3.clear();

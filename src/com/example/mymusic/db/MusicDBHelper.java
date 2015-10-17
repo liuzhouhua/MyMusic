@@ -47,7 +47,7 @@ public class MusicDBHelper extends SQLiteOpenHelper{
 				+ " TEXT, "+ DBConstant.LOCAL_TITLE
 				+ " TEXT, " + DBConstant.LOCAL_ARTIST + " TEXT, "
 				+ DBConstant.LOCAL_ALBUM + " TEXT, " + DBConstant.LOCAL_PATH
-				+ " TEXT, " + DBConstant.LOCAL_DURATION
+				+ " TEXT UNIQUE NOT NULL, " + DBConstant.LOCAL_DURATION
 				+ " LONG, " + DBConstant.LOCAL_FILE_SIZE
 				+ " LONG, " + DBConstant.LOCAL_LRC_TITLE
 				+ " TEXT, " + DBConstant.LOCAL_LRC_PATH + " TEXT, "
@@ -58,14 +58,14 @@ public class MusicDBHelper extends SQLiteOpenHelper{
 			+ " ("+DBConstant.FAVORITES_ID 
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT," + DBConstant.FAVORITES_LOCAL_TITLE
 			+ " TEXT, "+ DBConstant.FAVORITES_LOCAL_SINGER
-			+ " TEXT, "+ DBConstant.FAVORITES_LOCAL_PATH + ");";
+			+ " TEXT, "+ DBConstant.FAVORITES_LOCAL_PATH + "TEXT UNIQUE NOT NULL);";
 	
 	private static final String CREATE_ARTIST = "CREATE TABLE IF NOT EXISTS " + DBConstant.TABLE_ARTIST
 			+ " ("+DBConstant.ARTIST_ID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT," + DBConstant.ARTIST_LOCAL_TITLE
 			+ " TEXT, "+ DBConstant.ARTIST_LOCAL_SINGER
 			+ " TEXT, "+ DBConstant.ARTIST_LOCAL_PATH
-			+ " TEXT, "+ DBConstant.ARTIST_LOCAL_PINYIN
+			+ " TEXT UNIQUE NOT NULL, "+ DBConstant.ARTIST_LOCAL_PINYIN
 			+ " TEXT, "+ DBConstant.ARTIST_LOCAL_FIRSTLETTER
 			+ " TEXT);";
 
@@ -75,7 +75,7 @@ public class MusicDBHelper extends SQLiteOpenHelper{
 			+ " TEXT, " + DBConstant.ALUBM_LOCAL_TITLE
 			+ " TEXT, " + DBConstant.ALUBM_LOCAL_SINGER
 			+ " TEXT, " + DBConstant.ALUBM_LOCAL_PATH
-			+ " TEXT, " + DBConstant.ALUBM_LOCAL_PINYIN
+			+ " TEXT UNIQUE NOT NULL, " + DBConstant.ALUBM_LOCAL_PINYIN
 			+ " TEXT, " + DBConstant.ALUBM_LOCAL_FIRSTLETTER
 			+ " TEXT);";
 	
@@ -106,6 +106,56 @@ public class MusicDBHelper extends SQLiteOpenHelper{
 			database = getDatabase();
 		}
 		return database.insert(tableName, null, content);
+	}
+	
+	public synchronized long update(String tableName,ContentValues content,
+			String whereClause, String[] whereArgs){
+		if(database==null){
+			database = getDatabase();
+		}
+		return database.update(tableName, content, whereClause, whereArgs);
+	}
+	
+	public  boolean isDataExitsByPath(String tableName,String field,String uname){
+		return isExistsByField(tableName,field, uname);
+	}
+	
+	//判断是否存在
+	public synchronized Boolean isExistsByField(String table, String field, String value) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT COUNT(*) FROM ").append(table).append(" WHERE ")
+				.append(field).append(" =?");
+		try {
+			return isExistsBySQL(sql.toString(), new String[] { value });
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public synchronized Boolean isExistsBySQL(String sql, String[] selectionArgs) {
+		SQLiteDatabase dataBase = null;
+
+		Cursor cursor = null;
+		try {
+			dataBase = getReadableDatabase();
+			cursor = dataBase.rawQuery(sql, selectionArgs);
+			if (cursor.moveToFirst()) {
+				boolean isExist = cursor.getInt(0) > 0;
+				cursor.close();
+				return isExist;
+			} else {
+				cursor.close();
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{
+			if(cursor != null && !cursor.isClosed()){
+				cursor.close();
+			}
+		}
+		return false;
 	}
 	
 	//查询音乐数量
