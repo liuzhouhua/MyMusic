@@ -10,6 +10,8 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
 
 //汉子转拼音
 public class CharacterParser {
+	
+	private StringBuilder buffer;
 
 	// 将汉字转换为全拼  
     public static String getPingYin(String src) {  
@@ -42,7 +44,7 @@ public class CharacterParser {
         return t4;  
     }  
   
-    // 返回中文的首字母  
+    // 返回中文每个字的首字母  
     public static String getPinYinHeadChar(String str) {  
   
         String convert = "";  
@@ -57,6 +59,14 @@ public class CharacterParser {
         }  
         return convert;  
     }  
+    
+    public static String getPinYinFirstHeadChar(String str) {  
+    	  
+        String convert = "";  
+        convert = getPinYinHeadChar(str);
+        convert = convert.charAt(0)+"";
+        return convert;
+    }
   
     // 将字符串转移为ASCII码  
     public static String getCnASCII(String cnStr) {  
@@ -66,6 +76,6 @@ public class CharacterParser {
             strBuf.append(Integer.toHexString(bGBK[i] & 0xff));  
         }  
         return strBuf.toString();  
-    }  
-
+    }   
+  
 }

@@ -82,7 +82,7 @@ public class MusicManager {
     		contentValues2.put(DBConstant.ARTIST_LOCAL_SINGER, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
     		contentValues2.put(DBConstant.ARTIST_LOCAL_PATH, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
     		contentValues2.put(DBConstant.ARTIST_LOCAL_PINYIN, CharacterParser.getPingYin(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))));
-    		contentValues2.put(DBConstant.ARTIST_LOCAL_FIRSTLETTER, CharacterParser.getPinYinHeadChar(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))));
+    		contentValues2.put(DBConstant.ARTIST_LOCAL_FIRSTLETTER, CharacterParser.getPinYinFirstHeadChar(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))));
     		mDBHelper.insert(DBConstant.TABLE_ARTIST, contentValues2);
     		
     		contentValues3.put(DBConstant.ALUBM_LOCAL_TITLE, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)));
@@ -90,7 +90,7 @@ public class MusicManager {
     		contentValues3.put(DBConstant.ALUBM_LOCAL_ALBUMNAME, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)));
     		contentValues3.put(DBConstant.ALUBM_LOCAL_PATH, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
     		contentValues3.put(DBConstant.ALUBM_LOCAL_PINYIN, CharacterParser.getPingYin(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM))));
-    		contentValues3.put(DBConstant.ALUBM_LOCAL_FIRSTLETTER, CharacterParser.getPinYinHeadChar(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM))));
+    		contentValues3.put(DBConstant.ALUBM_LOCAL_FIRSTLETTER, CharacterParser.getPinYinFirstHeadChar(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM))));
     		mDBHelper.insert(DBConstant.TABLE_ALBUM, contentValues3);
     		
     		contentValues.clear();
@@ -99,8 +99,8 @@ public class MusicManager {
     	}while(cursor.moveToNext());
 	}
 
-	public  Music getOneMusicFromDB(String signer){
-		return mDBHelper.queryForObject(new RowMapper<Music>() {
+	public  List<Music> getSingerMusicFromDB(String signer){
+		return mDBHelper.queryForList(new RowMapper<Music>() {
 			
 			public Music mapRow(Cursor cursor, int count){
 				Music music = new Music();
@@ -114,5 +114,4 @@ public class MusicManager {
 			
 		}, "select * from "+ DBConstant.TABLE_ARTIST +" where local_singer=?", new String[]{signer});
 	}
-	
 }
