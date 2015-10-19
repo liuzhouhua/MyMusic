@@ -61,9 +61,16 @@ public class LocalSingerAdapter extends BaseAdapter implements SectionIndexer{
 		//如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现  
 		if(position==getPositionForSection(selection)){
 			viewHolder.tvLetter.setVisibility(View.VISIBLE);
-//			viewHolder.tvLetter.setText(mDataList.get(position).get)
+			if(mDataList.get(position).getmLetterofSinger().matches("^[a-zA-Z]+$")){
+				viewHolder.tvLetter.setText(mDataList.get(position).getmLetterofSinger());
+			}else{
+				viewHolder.tvLetter.setText("#");
+			}
+		}else{
+			viewHolder.tvLetter.setVisibility(View.GONE);
 		}
-		return null;
+		viewHolder.tvTitle.setText(mDataList.get(position).getmMusicSinger());
+		return convertView;
 	}
 
 	@Override
@@ -76,14 +83,21 @@ public class LocalSingerAdapter extends BaseAdapter implements SectionIndexer{
 	//根据首字母的ascii值来获取在该ListView中第一次出现该首字母的位置
 	@Override
 	public int getPositionForSection(int sectionIndex) {
-		return 0;
+		for(int i=0;i<getCount();i++){
+			String storstr = mDataList.get(i).getmLetterofSinger();
+			char firstchar = storstr.toUpperCase().charAt(0);
+			if(firstchar==sectionIndex){
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	//根据ListView的position来获取该位置上面的name的首字母char的ascii值，
 	//例如： 如果该position上面的name是阿妹，首字母就是A，那么此方法返回的就是'A'字母的ascii值，也就是65
 	@Override
 	public int getSectionForPosition(int position) {
-		return 0;
+		return mDataList.get(position).getmLetterofSinger().charAt(0);
 	}
 
 	final static class ViewHolder{

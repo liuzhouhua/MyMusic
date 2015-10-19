@@ -245,7 +245,7 @@ public class MusicDBHelper extends SQLiteOpenHelper{
 			dataBase = getReadableDatabase();
 			cursor = dataBase.rawQuery(sql, args);
 			list = new ArrayList<T>();
-			if (cursor.moveToNext()) {
+			while (cursor.moveToNext()) {
 				if(rowMapper.mapRow(cursor, cursor.getCount())!=null){
 					list.add(rowMapper.mapRow(cursor, cursor.getPosition()));
 				}
