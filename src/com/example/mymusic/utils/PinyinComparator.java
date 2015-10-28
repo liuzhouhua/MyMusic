@@ -2,6 +2,8 @@ package com.example.mymusic.utils;
 
 import java.util.Comparator;
 
+import android.util.Log;
+
 import com.example.mymusic.model.Music;
 
 public class PinyinComparator implements Comparator<Music>{

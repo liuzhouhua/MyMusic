@@ -8,10 +8,13 @@ import com.example.mymusic.adapter.LocalSingerAdapter;
 import com.example.mymusic.constant.DBConstant;
 import com.example.mymusic.db.MusicDBHelper;
 import com.example.mymusic.db.MusicDBHelper.RowMapper;
+import com.example.mymusic.event.RefreshLocalSingerFragmentEvent;
 import com.example.mymusic.model.Music;
 import com.example.mymusic.utils.PinyinComparator;
 import com.example.mymusic.view.SideBar;
 import com.example.mymusic.view.SideBar.OnTouchingLetterChangedListener;
+
+import de.greenrobot.event.EventBus;
 
 import android.annotation.SuppressLint;
 import android.database.Cursor;
@@ -61,7 +64,31 @@ public class LocalSingerFragment extends Fragment{
 			}
 		});
 		dbHelper = MusicDBHelper.getInstance(getActivity());
-		mMusicList = dbHelper.queryForList(new RowMapper<Music>() {
+		mMusicList = scanDBForList();
+		for(Music music:mMusicList){
+			Log.d(TAG,"music title:"+music.getmMusicSinger()+
+					" music singer:"+music.getmMusicSinger()+
+					" music uri:"+music.getmMusicUrl()+
+					" music pinyin:"+music.getmPinYinofSinger()+
+					" music letter:"+music.getmLetterofSinger());
+		}
+		comparator = new PinyinComparator(0);
+		Collections.sort(mMusicList, comparator);
+		for(Music music:mMusicList){
+			Log.d(TAG,"music title:"+music.getmMusicSinger()+
+					" music singer:"+music.getmMusicSinger()+
+					" music uri:"+music.getmMusicUrl()+
+					" music pinyin:"+music.getmPinYinofSinger()+
+					" music letter:"+music.getmLetterofSinger());
+		}
+		adapter = new LocalSingerAdapter(getActivity(), mMusicList);
+		mSingerList.setAdapter(adapter);
+		EventBus.getDefault().register(this);
+	}
+	
+	public List<Music> scanDBForList(){
+		List<Music> list = new ArrayList<Music>();
+		list = dbHelper.queryForList(new RowMapper<Music>() {
 
 			@Override
 			public Music mapRow(Cursor cursor, int count) {
@@ -75,20 +102,19 @@ public class LocalSingerFragment extends Fragment{
 			}
 			
 		}, "select * from "+DBConstant.TABLE_ARTIST, null);
-		for(Music music:mMusicList){
-			Log.d(TAG,"music title:"+music.getmMusicSinger()+
-					" music singer:"+music.getmMusicSinger()+
-					" music uri:"+music.getmMusicUrl()+
-					" music pinyin:"+music.getmPinYinofSinger()+
-					" music letter:"+music.getmLetterofSinger());
-		}
-		comparator = new PinyinComparator(0);
-		
-		Collections.sort(mMusicList, comparator);
-		
-		adapter = new LocalSingerAdapter(getActivity(), mMusicList);
-		mSingerList.setAdapter(adapter);
-		
+		return list;
+	}
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		EventBus.getDefault().unregister(this);
 	}
 
+	public void onEventMainThread(RefreshLocalSingerFragmentEvent event){
+		mMusicList = scanDBForList();
+		Collections.sort(mMusicList, comparator);
+		adapter = new LocalSingerAdapter(getActivity(), mMusicList);
+		mSingerList.setAdapter(adapter);
+	}
 }

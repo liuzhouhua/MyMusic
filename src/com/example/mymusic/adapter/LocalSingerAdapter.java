@@ -85,7 +85,7 @@ public class LocalSingerAdapter extends BaseAdapter implements SectionIndexer{
 	public int getPositionForSection(int sectionIndex) {
 		for(int i=0;i<getCount();i++){
 			String storstr = mDataList.get(i).getmLetterofSinger();
-			char firstchar = storstr.toUpperCase().charAt(0);
+			char firstchar = storstr.charAt(0);
 			if(firstchar==sectionIndex){
 				return i;
 			}

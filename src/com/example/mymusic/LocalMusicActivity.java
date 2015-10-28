@@ -8,6 +8,7 @@ import com.example.mymusic.constant.Constant;
 import com.example.mymusic.constant.DBConstant;
 import com.example.mymusic.db.MusicDBHelper;
 import com.example.mymusic.event.RefreshLocalMusicFragmentEvent;
+import com.example.mymusic.event.RefreshLocalSingerFragmentEvent;
 import com.example.mymusic.manager.MusicManager;
 
 import de.greenrobot.event.EventBus;
@@ -172,6 +173,7 @@ public class LocalMusicActivity extends FragmentActivity implements OnPageChange
 					progressDialog.dismiss();
 					if(result==true){
 						EventBus.getDefault().post(new RefreshLocalMusicFragmentEvent());
+						EventBus.getDefault().post(new RefreshLocalSingerFragmentEvent());
 					}
 				}
 				

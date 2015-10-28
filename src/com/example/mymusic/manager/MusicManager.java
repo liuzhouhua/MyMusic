@@ -69,11 +69,21 @@ public class MusicManager {
     	ContentValues contentValues2 = new ContentValues();
     	ContentValues contentValues3 = new ContentValues();
     	String path = "";
+    	String singer = "";
     	do{
     		contentValues.put(DBConstant.LOCAL_TITLE, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)));
     		contentValues.put(DBConstant.LOCAL_ALBUM, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)));
-    		contentValues.put(DBConstant.LOCAL_ARTIST, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
+    		singer = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
     		path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
+    		if("<unknown>".equals(singer)){
+    			try{
+    				singer = path.substring(path.lastIndexOf("/")+1, path.lastIndexOf("-"));
+    			}catch(Exception e){
+    				e.printStackTrace();
+    				singer = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
+    			}
+    		}
+    		contentValues.put(DBConstant.LOCAL_ARTIST, singer);
     		contentValues.put(DBConstant.LOCAL_DURATION, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)));
     		contentValues.put(DBConstant.LOCAL_FILE_SIZE, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.SIZE)));
     		contentValues.put(DBConstant.LOCAL_NAME, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME)));
@@ -85,9 +95,9 @@ public class MusicManager {
     		}
     		
     		contentValues2.put(DBConstant.ARTIST_LOCAL_TITLE, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)));
-    		contentValues2.put(DBConstant.ARTIST_LOCAL_SINGER, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
-    		contentValues2.put(DBConstant.ARTIST_LOCAL_PINYIN, CharacterParser.getPingYin(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))));
-    		contentValues2.put(DBConstant.ARTIST_LOCAL_FIRSTLETTER, CharacterParser.getPinYinFirstHeadChar(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))));
+    		contentValues2.put(DBConstant.ARTIST_LOCAL_SINGER, singer);
+    		contentValues2.put(DBConstant.ARTIST_LOCAL_PINYIN, CharacterParser.getPingYin(singer));
+    		contentValues2.put(DBConstant.ARTIST_LOCAL_FIRSTLETTER, CharacterParser.getPinYinFirstHeadChar(singer));
     		if(mDBHelper.isDataExitsByPath(DBConstant.TABLE_ARTIST, DBConstant.ARTIST_LOCAL_PATH, path)){
     			mDBHelper.update(DBConstant.TABLE_ARTIST, contentValues2, DBConstant.ARTIST_LOCAL_PATH+"=?", new String[]{path});
     		}else{
@@ -96,9 +106,8 @@ public class MusicManager {
     		}
     		
     		contentValues3.put(DBConstant.ALUBM_LOCAL_TITLE, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE)));
-    		contentValues3.put(DBConstant.ALUBM_LOCAL_SINGER, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)));
+    		contentValues3.put(DBConstant.ALUBM_LOCAL_SINGER, singer);
     		contentValues3.put(DBConstant.ALUBM_LOCAL_ALBUMNAME, cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)));
-    		path = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
     		contentValues3.put(DBConstant.ALUBM_LOCAL_PINYIN, CharacterParser.getPingYin(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM))));
     		contentValues3.put(DBConstant.ALUBM_LOCAL_FIRSTLETTER, CharacterParser.getPinYinFirstHeadChar(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM))));
     		if(mDBHelper.isDataExitsByPath(DBConstant.TABLE_ALBUM, DBConstant.ALUBM_LOCAL_PATH, path)){
