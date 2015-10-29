@@ -20,6 +20,7 @@ import com.example.mymusic.view.SideBar.OnTouchingLetterChangedListener;
 import de.greenrobot.event.EventBus;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -71,6 +74,18 @@ public class LocalSingerFragment extends Fragment{
 		Collections.sort(mMusicList, comparator);
 		adapter = new LocalSingerAdapter(getActivity(), mMusicList);
 		mSingerList.setAdapter(adapter);
+		mSingerList.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Log.d(TAG, "position :"+position+" singer :"+mMusicList.get(position).getSinger());
+				Intent intent = new Intent(getActivity(), LocalSingerSingleActivity.class);
+				intent.putExtra("singerName", mMusicList.get(position).getSinger());
+				startActivity(intent);
+			}
+			
+		});
 		EventBus.getDefault().register(this);
 	}
 	
@@ -81,7 +96,7 @@ public class LocalSingerFragment extends Fragment{
 			@Override
 			public Singer mapRow(Cursor cursor, int count) {
 				Singer singer = new Singer();
-				singer.setSinger(cursor.getString(cursor.getColumnIndex(DBConstant.ARTIST_LOCAL_SINGER)).trim());
+				singer.setSinger(cursor.getString(cursor.getColumnIndex(DBConstant.ARTIST_LOCAL_SINGER)));
 				singer.setLetterForSinger(cursor.getString(cursor.getColumnIndex(DBConstant.ARTIST_LOCAL_FIRSTLETTER)).trim().toUpperCase());
 				return singer;
 			}

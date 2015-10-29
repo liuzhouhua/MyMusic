@@ -29,6 +29,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.example.mymusic.LocalMusicActivity"></activity>
+        <activity android:name="com.example.mymusic.LocalSingerSingleActivity"></activity>
         
         <service android:name="com.example.mymusic.service.BackGroundService"></service>
     </application>

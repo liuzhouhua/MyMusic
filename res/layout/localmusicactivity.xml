@@ -7,13 +7,23 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal">
+        
+        <LinearLayout
+            android:id="@+id/ly_back" 
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:background="@drawable/backbutton">
+            
          <Button
-            android:id="@+id/titile_back"
-            android:layout_width="15dp"
-            android:layout_height="30dp"
+            android:layout_width="10dp"
+            android:layout_height="28dp"
             android:gravity="center"
             android:layout_marginLeft="20dp"
-            android:background="@drawable/backbutton" />
+            android:background="@drawable/icon_arrow"
+            android:clickable="false" />
+        </LinearLayout>
 
     <TextView 
         android:id="@+id/title_text"

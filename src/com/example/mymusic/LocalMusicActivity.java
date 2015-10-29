@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -41,7 +42,8 @@ public class LocalMusicActivity extends FragmentActivity implements OnPageChange
 	private ViewPager mLocalMusicTab;
 	private RadioButton mMusic,mSinger,mAlbum,mFilder;
 	private RadioGroup mLocalMusicTopTabRadio;
-	private Button mBackBtn,mScanBtn;
+	private Button mScanBtn;
+	private LinearLayout mBackLayout;
 	private List<Fragment> fragments;
 	private LocalMusicPageAdapter adapter;
 	private MusicManager mMusicManager;
@@ -74,9 +76,9 @@ public class LocalMusicActivity extends FragmentActivity implements OnPageChange
 		mFilder = (RadioButton) findViewById(R.id.folder);
 		mLocalMusicTopTabRadio.setOnCheckedChangeListener(this);
 		
-		mBackBtn = (Button) findViewById(R.id.titile_back);
+		mBackLayout = (LinearLayout) findViewById(R.id.ly_back);
 		mScanBtn = (Button) findViewById(R.id.title_edit);
-		mBackBtn.setOnClickListener(this);
+		mBackLayout.setOnClickListener(this);
 		mScanBtn.setOnClickListener(this);//
 		
 	}
@@ -146,7 +148,7 @@ public class LocalMusicActivity extends FragmentActivity implements OnPageChange
 	
 	public void onClick(View v){
 		switch(v.getId()){
-		case R.id.titile_back:
+		case R.id.ly_back:
 			finish();
 			break;
 		case R.id.title_edit:
