@@ -13,8 +13,9 @@ public final class R {
     public static final class color {
         public static final int balck=0x7f040001;
         public static final int buttongrey=0x7f040003;
+        public static final int layoutbackground=0x7f040004;
         public static final int lightgrey=0x7f040002;
-        public static final int tab_color=0x7f040004;
+        public static final int tab_color=0x7f040005;
         public static final int white=0x7f040000;
     }
     public static final class dimen {

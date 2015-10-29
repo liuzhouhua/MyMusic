@@ -4,5 +4,6 @@
     <color name="balck">#000000</color>
     <color name="lightgrey">#FFDCDCDC</color>
     <color name="buttongrey">#f0f0f0</color>
+    <color name="layoutbackground">#f6f7f8</color>
     
 </resources>
