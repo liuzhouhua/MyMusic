@@ -16,13 +16,24 @@ public class CharacterParser {
 	// 将汉字转换为全拼  
     public static String getPingYin(String src) {  
   
-        char[] t1 = null;  
+        char[] t1 = null; 
+        //转换为字符数组
         t1 = src.toCharArray();  
         String[] t2 = new String[t1.length];  
         HanyuPinyinOutputFormat t3 = new HanyuPinyinOutputFormat();  
-          
-        t3.setCaseType(HanyuPinyinCaseType.LOWERCASE);  
+        //设置小写
+        t3.setCaseType(HanyuPinyinCaseType.LOWERCASE); 
+        //设置声调格式：无声调
+        /*方法参数HanyuPinyinToneType有以下常量对象：
+        HanyuPinyinToneType.WITH_TONE_NUMBER 用数字表示声调，例如：zhao4
+        HanyuPinyinToneType.WITHOUT_TONE 无声调表示，例如：zhao
+        HanyuPinyinToneType.WITH_TONE_MARK 用声调符号表示，例如：zhao*/
         t3.setToneType(HanyuPinyinToneType.WITHOUT_TONE);  
+        //设置特殊拼音ü的显示格式：
+        /*方法参数HanyuPinyinVCharType有以下常量对象：
+        HanyuPinyinVCharType.WITH_U_AND_COLON 以U和一个冒号表示该拼音， 
+        HanyuPinyinVCharType.WITH_V 以V表示该字符， 
+        HanyuPinyinVCharType.WITH_U_UNICODE  */
         t3.setVCharType(HanyuPinyinVCharType.WITH_V);  
         String t4 = "";  
         int t0 = t1.length;  
@@ -36,7 +47,6 @@ public class CharacterParser {
                 } else  
                     t4 += java.lang.Character.toString(t1[i]);  
             }  
-            // System.out.println(t4);  
             return t4;  
         } catch (BadHanyuPinyinOutputFormatCombination e1) {  
             e1.printStackTrace();  
@@ -60,6 +70,7 @@ public class CharacterParser {
         return convert;  
     }  
     
+    //返回第一个中文字的首字母
     public static String getPinYinFirstHeadChar(String str) {  
     	  
         String convert = "";  

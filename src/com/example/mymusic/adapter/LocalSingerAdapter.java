@@ -5,21 +5,23 @@ import java.util.List;
 
 import com.example.mymusic.R;
 import com.example.mymusic.model.Music;
+import com.example.mymusic.model.Singer;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView.FindListener;
 import android.widget.BaseAdapter;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 public class LocalSingerAdapter extends BaseAdapter implements SectionIndexer{
 	
-	private List<Music> mDataList;
+	private List<Singer> mDataList;
 	private Context context;
 	
-	public LocalSingerAdapter(Context context,List<Music> datas){
+	public LocalSingerAdapter(Context context,List<Singer> datas){
 		this.mDataList = datas;
 		this.context = context;
 	}
@@ -27,13 +29,13 @@ public class LocalSingerAdapter extends BaseAdapter implements SectionIndexer{
 	@Override
 	public int getCount() {
 		if(mDataList==null){
-			mDataList = new ArrayList<Music>();
+			mDataList = new ArrayList<Singer>();
 		}
 		return mDataList.size();
 	}
 
 	@Override
-	public Music getItem(int position) {
+	public Singer getItem(int position) {
 		return mDataList.get(position);
 	}
 
@@ -50,6 +52,7 @@ public class LocalSingerAdapter extends BaseAdapter implements SectionIndexer{
 			convertView = LayoutInflater.from(context).inflate(R.layout.local_singer_item, parent, false);
 			viewHolder.tvLetter = (TextView) convertView.findViewById(R.id.catalog);
 			viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.title);
+			viewHolder.tvCount = (TextView) convertView.findViewById(R.id.count);
 			convertView.setTag(viewHolder);
 		}else{
 			viewHolder = (ViewHolder) convertView.getTag();
@@ -61,15 +64,16 @@ public class LocalSingerAdapter extends BaseAdapter implements SectionIndexer{
 		//如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现  
 		if(position==getPositionForSection(selection)){
 			viewHolder.tvLetter.setVisibility(View.VISIBLE);
-			if(mDataList.get(position).getmLetterofSinger().matches("^[a-zA-Z]+$")){
-				viewHolder.tvLetter.setText(mDataList.get(position).getmLetterofSinger());
+			if(mDataList.get(position).getLetterForSinger().matches("^[a-zA-Z]+$")){
+				viewHolder.tvLetter.setText(mDataList.get(position).getLetterForSinger());
 			}else{
 				viewHolder.tvLetter.setText("#");
 			}
 		}else{
 			viewHolder.tvLetter.setVisibility(View.GONE);
 		}
-		viewHolder.tvTitle.setText(mDataList.get(position).getmMusicSinger());
+		viewHolder.tvTitle.setText(mDataList.get(position).getSinger());
+		viewHolder.tvCount.setText(mDataList.get(position).getCount()+"首");
 		return convertView;
 	}
 
@@ -84,7 +88,7 @@ public class LocalSingerAdapter extends BaseAdapter implements SectionIndexer{
 	@Override
 	public int getPositionForSection(int sectionIndex) {
 		for(int i=0;i<getCount();i++){
-			String storstr = mDataList.get(i).getmLetterofSinger();
+			String storstr = mDataList.get(i).getLetterForSinger();
 			char firstchar = storstr.charAt(0);
 			if(firstchar==sectionIndex){
 				return i;
@@ -93,15 +97,16 @@ public class LocalSingerAdapter extends BaseAdapter implements SectionIndexer{
 		return -1;
 	}
 
-	//根据ListView的position来获取该位置上面的name的首字母char的ascii值，
+	//根据ListView的position来获取该位置上面的索引值，这里使用name的首字母char的ascii值代替，
 	//例如： 如果该position上面的name是阿妹，首字母就是A，那么此方法返回的就是'A'字母的ascii值，也就是65
 	@Override
 	public int getSectionForPosition(int position) {
-		return mDataList.get(position).getmLetterofSinger().charAt(0);
+		return mDataList.get(position).getLetterForSinger().charAt(0);
 	}
 
 	final static class ViewHolder{
 		TextView tvLetter;
 		TextView tvTitle;
+		TextView tvCount;
 	}
 }

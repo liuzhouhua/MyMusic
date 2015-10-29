@@ -12,23 +12,61 @@
         android:paddingBottom="5dip" 
         android:paddingTop="5dip" 
         android:paddingLeft="5dip" 
-        android:layout_weight="1.0" 
+        android:layout_weight="2.0" 
         android:textColor="#454545" 
         android:background="#E0E0E0" 
         android:id="@+id/catalog"/>
-
+    
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0"
+        android:orientation="horizontal">
+        
+    <LinearLayout 
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
+        
 	<TextView 
 	    android:gravity="center_vertical" 
-	    android:layout_height="fill_parent" 
-	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+	    android:layout_width="wrap_content" 
 	    android:text="hhhh" 
 	    android:paddingBottom="10dip" 
 	    android:paddingTop="10dip" 
-	    android:layout_weight="1.0" 
-	    android:textColor="#336598" 
+	    android:textColor="#000000" 
 	    android:id="@+id/title" 
-	    android:layout_marginLeft="5dip" 
-	    android:layout_gravity="center_vertical"/>
+	    android:textSize="18sp"
+	    android:layout_marginLeft="5dip" />
+    </LinearLayout>
+        
+	
+	<LinearLayout 
+	    android:layout_width="40dp"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical"
+	    android:gravity="center_vertical">
+	    
+	<TextView 
+	    android:id="@+id/count"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="1首"
+	    android:layout_gravity="center|left"
+	    />
+	</LinearLayout>
+	
+	
+    </LinearLayout>
+
+	
+	<TextView 
+	    android:layout_width="match_parent"
+	    android:layout_height="2px"
+	    android:background="@color/lightgrey"/>
     
 
 </LinearLayout>

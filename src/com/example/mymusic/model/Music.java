@@ -10,6 +10,7 @@ public class Music {
 	private String mPinYinofSinger;
 	private String mLetterofAlbum;
 	private String mPinYinofAlbum;
+	private int mCount;
 	public String getmMusicName() {
 		return mMusicName;
 	}
@@ -57,6 +58,12 @@ public class Music {
 	}
 	public void setmPinYinofAlbum(String mPinYinofAlbum) {
 		this.mPinYinofAlbum = mPinYinofAlbum;
+	}
+	public int getmCount() {
+		return mCount;
+	}
+	public void setmCount(int mCount) {
+		this.mCount = mCount;
 	}
 	
 }

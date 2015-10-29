@@ -260,4 +260,25 @@ public class MusicDBHelper extends SQLiteOpenHelper{
 		}
 		return list;
 	}
+	
+	public synchronized int queryCount(String sql,
+			String[] args){
+		SQLiteDatabase dataBase = null;
+
+		Cursor cursor = null;
+		int count = 0;
+		try {
+			dataBase = getReadableDatabase();
+			cursor = dataBase.rawQuery(sql, args);
+			count = cursor.getCount();
+			cursor.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{
+			if(cursor != null && !cursor.isClosed()){
+				cursor.close();
+			}
+		}
+		return count;
+	}
 }
