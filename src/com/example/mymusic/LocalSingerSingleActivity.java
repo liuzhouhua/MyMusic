@@ -41,6 +41,7 @@ public class LocalSingerSingleActivity extends Activity {
 		mBackLayout = (LinearLayout) findViewById(R.id.ry_back_singer_single);
 		mSingerName = (TextView) findViewById(R.id.tv_singer_name);
 		mSingerMusicListView = (ListView) findViewById(R.id.local_music_list);
+		mSingerName.setText(singer);
 		
 		dbHelper = MusicDBHelper.getInstance(this);
 		

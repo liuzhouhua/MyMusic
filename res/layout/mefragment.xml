@@ -30,7 +30,8 @@
         android:layout_height="50dp"
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal"
-        android:id="@+id/localmusic">
+        android:id="@+id/localmusic"
+        android:background="@drawable/backbutton">
         <ImageView 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,7 +61,7 @@
     
     <ImageView 
         android:layout_width="match_parent"
-        android:layout_height="6dip"
+        android:layout_height="2dp"
         android:src="@drawable/line"/>
     
     <LinearLayout 
@@ -97,7 +98,7 @@
     </LinearLayout>
     <ImageView 
         android:layout_width="match_parent"
-        android:layout_height="6dip"
+        android:layout_height="2dp"
         android:src="@drawable/line"/>
     <LinearLayout 
         android:layout_width="match_parent"
