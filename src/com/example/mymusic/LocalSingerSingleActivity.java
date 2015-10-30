@@ -36,6 +36,7 @@ public class LocalSingerSingleActivity extends Activity {
 	private TextView mSingerName;
 	private ListView mSingerMusicListView;
 	private List<Music> mDataList;
+	private List<String> mMusicUrl = new ArrayList<String>();
 	private MusicDBHelper dbHelper;
 	private LocalSingerSingleAdapter adapter;
 	private BackGroundService.PlayAndStopMusic playAndStopMusicBinder;
@@ -73,6 +74,13 @@ public class LocalSingerSingleActivity extends Activity {
 		mSingerMusicListView.setAdapter(adapter);
 		
 		initEvent();
+		initData();
+	}
+
+	private void initData() {
+		for(Music music : mDataList){
+			mMusicUrl.add(music.getmMusicUrl());
+		}
 	}
 
 	private void initEvent() {
@@ -91,7 +99,8 @@ public class LocalSingerSingleActivity extends Activity {
 					int position, long id) {
 				Log.d(TAG, " url :"+mDataList.get(position).getmMusicUrl());
 				if(playAndStopMusicBinder!=null){
-					playAndStopMusicBinder.playMusic(mDataList.get(position).getmMusicUrl());
+					playAndStopMusicBinder.initData(mDataList.get(position).getmMusicUrl(), mMusicUrl, position);
+					playAndStopMusicBinder.playMusic();
 				}
 			}
 			
@@ -119,7 +128,6 @@ public class LocalSingerSingleActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		Intent service = new Intent(this, BackGroundService.class);
 		unbindService(connection);
 	}
 

@@ -105,7 +105,8 @@ public class LocalMusicFragment extends Fragment{
 					String itemUri = mMusicUri.get(position);
 					Log.d(TAG, "itemUri :"+itemUri);
 					if(playAndStopMusicBinder!=null){
-						playAndStopMusicBinder.playMusic(itemUri);
+						playAndStopMusicBinder.initData(itemUri, mMusicUri, position);
+						playAndStopMusicBinder.playMusic();
 					}
 				}
 				
@@ -124,7 +125,6 @@ public class LocalMusicFragment extends Fragment{
 	public void onDestroy() {
 		super.onDestroy();
 		EventBus.getDefault().unregister(this);
-		Intent service = new Intent(getActivity(), BackGroundService.class);
 		getActivity().unbindService(connection);
 	}
 	

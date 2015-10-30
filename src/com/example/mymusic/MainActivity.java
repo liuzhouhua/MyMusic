@@ -154,5 +154,11 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
 	}
 	
 	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		unbindService(connection);
+	}
+	
     
 }

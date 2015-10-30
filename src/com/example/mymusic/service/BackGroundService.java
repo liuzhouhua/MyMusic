@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
@@ -39,6 +40,9 @@ public class BackGroundService extends Service {
 
 	private ImageButton mPlayBtn,mPlayNextBtn;
 	private TextView mSongName,mSinger;
+	private List<String> mPlayList;
+	private int currentPosition;
+	private String currentUrl;
 
 	public BackGroundService() {
 	}
@@ -54,6 +58,14 @@ public class BackGroundService extends Service {
 		mPlayNextBtn = (ImageButton) view.findViewById(R.id.local_miniplayer_next);
 		mSongName = (TextView) view.findViewById(R.id.local_miniplayer_song);
 		mSinger = (TextView) view.findViewById(R.id.local_miniplayer_artist);
+		
+		mPlayer.setOnCompletionListener(new OnCompletionListener() {
+			
+			@Override
+			public void onCompletion(MediaPlayer mp) {
+				mBinder.playNextMusic();
+			}
+		});
 		
 //		createView();
 	}
@@ -86,14 +98,18 @@ public class BackGroundService extends Service {
 	}
 	
 	public class PlayAndStopMusic extends Binder{
-		public void playMusic(String uri){
-			Log.d(TAG, "playMusic :"+uri);
+		public void initData(String uri,List<String> mList,int mPosition){
+			currentUrl = uri;
+			mPlayList = mList;
+			currentPosition = mPosition;
+		}
+		public void playMusic(){
 			if(mPlayer==null){
 				mPlayer = new MediaPlayer();
 			}
 			try {
 				mPlayer.reset();
-				mPlayer.setDataSource(uri);
+				mPlayer.setDataSource(currentUrl);
 				mPlayer.prepare();
 				mPlayer.start();
 			} catch (IllegalArgumentException e) {
@@ -107,16 +123,24 @@ public class BackGroundService extends Service {
 			}
 		}
 		public void pauseMusic(){
-			
+			mPlayer.pause();
 		}
 		public void playNextMusic(){
-			
+			currentPosition = currentPosition +1;
+			if(currentPosition<mPlayList.size()){
+				currentUrl = mPlayList.get(currentPosition);
+				playMusic();
+			}
 		}
 		public void playbeforeMusic(){
-			
+			currentPosition = currentPosition -1;
+			if(currentPosition>=0){
+				currentUrl = mPlayList.get(currentPosition);
+				playMusic();
+			}
 		}
 		public void stopMusic(){
-			
+			mPlayer.stop();
 		}
 	}
 }
