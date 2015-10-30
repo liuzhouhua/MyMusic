@@ -87,6 +87,16 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
 		bindService(service, connection, BIND_AUTO_CREATE);
     }
     
+    @Override
+    protected void onResume() {
+    	super.onResume();
+    }
+    
+    @Override
+    protected void onStart() {
+    	super.onStart();
+    }
+    
 	@Override
 	public void onPageScrollStateChanged(int arg0) {
 		Log.i(TAG, "onPageScrollStateChanged");
