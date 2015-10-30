@@ -65,7 +65,10 @@ public class LocalSingerFragment extends Fragment{
 			
 			@Override
 			public void onTouchingLetterChanged(String s) {
-				
+				int position = adapter.getPositionForSection(s.charAt(0));
+				if(position!=-1){
+					mSingerList.setSelection(position);
+				}
 			}
 		});
 		dbHelper = MusicDBHelper.getInstance(getActivity());

@@ -55,7 +55,7 @@ public class BackGroundService extends Service {
 		mSongName = (TextView) view.findViewById(R.id.local_miniplayer_song);
 		mSinger = (TextView) view.findViewById(R.id.local_miniplayer_artist);
 		
-		createView();
+//		createView();
 	}
 	
 	@Override
@@ -70,7 +70,7 @@ public class BackGroundService extends Service {
 		params.gravity = Gravity.BOTTOM;
 		params.width = WindowManager.LayoutParams.MATCH_PARENT;
 		params.height = WindowManager.LayoutParams.WRAP_CONTENT;
-		params.format = PixelFormat.RGBA_8888;
+		params.format = PixelFormat.TRANSLUCENT;
 		manager.addView(view, params);
 	}
 	
