@@ -124,6 +124,8 @@ public class LocalMusicFragment extends Fragment{
 	public void onDestroy() {
 		super.onDestroy();
 		EventBus.getDefault().unregister(this);
+		Intent service = new Intent(getActivity(), BackGroundService.class);
+		getActivity().unbindService(connection);
 	}
 	
 	public void onEventMainThread(RefreshLocalMusicFragmentEvent event){

@@ -118,8 +118,9 @@ public class LocalSingerSingleActivity extends Activity {
 	
 	@Override
 	protected void onDestroy() {
-		// TODO Auto-generated method stub
 		super.onDestroy();
+		Intent service = new Intent(this, BackGroundService.class);
+		unbindService(connection);
 	}
 
 }
