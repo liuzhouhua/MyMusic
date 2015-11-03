@@ -11,8 +11,10 @@ import com.example.mymusic.R;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningAppProcessInfo;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.PixelFormat;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -67,8 +69,17 @@ public class BackGroundService extends Service {
 			}
 		});
 		
-//		createView();
+		createView();
+		initBroadCastRecevier();
 	}
+	
+	private void initBroadCastRecevier() {
+    	IntentFilter intentFilter = new IntentFilter();
+    	intentFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
+    	intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
+    	registerReceiver(receiver, intentFilter);
+	}
+	
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
@@ -90,6 +101,7 @@ public class BackGroundService extends Service {
 	public void onDestroy() {
 		Log.d(TAG, "onDestroy");
 		super.onDestroy();
+		unregisterReceiver(receiver);
 	}
 	
 	@Override
@@ -143,4 +155,13 @@ public class BackGroundService extends Service {
 			mPlayer.stop();
 		}
 	}
+	
+	
+	private BroadcastReceiver receiver = new BroadcastReceiver() {
+		
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			manager.removeView(view);
+		}
+	};
 }

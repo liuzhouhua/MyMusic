@@ -9,8 +9,11 @@ import com.example.mymusic.service.BackGroundService;
 import com.example.mymusic.service.BackGroundService.PlayAndStopMusic;
 
 import android.R.plurals;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -58,7 +61,7 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
         initData();
     }
 
-    /**
+	/**
      * ��ʼ��
      */
     private void initview(){
@@ -159,6 +162,4 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
 		super.onDestroy();
 		unbindService(connection);
 	}
-	
-    
 }
