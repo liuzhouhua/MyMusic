@@ -49,7 +49,7 @@ public class LocalSingerAdapter extends BaseAdapter implements SectionIndexer{
 		ViewHolder viewHolder = null;
 		if(convertView==null){
 			viewHolder = new ViewHolder();
-			convertView = LayoutInflater.from(context).inflate(R.layout.local_singer_item, parent, false);
+			convertView = LayoutInflater.from(context).inflate(R.layout.item_local_singer, parent, false);
 			viewHolder.tvLetter = (TextView) convertView.findViewById(R.id.catalog);
 			viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.title);
 			viewHolder.tvCount = (TextView) convertView.findViewById(R.id.count);

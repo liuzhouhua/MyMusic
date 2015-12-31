@@ -45,7 +45,7 @@ public class LocalSingerSingleAdapter extends BaseAdapter {
 		ViewHolder viewHolder = null;
 		if(convertView==null){
 			viewHolder = new ViewHolder();
-			convertView = LayoutInflater.from(context).inflate(R.layout.music_list_item, parent, false);
+			convertView = LayoutInflater.from(context).inflate(R.layout.item_music_list, parent, false);
 			viewHolder.mMusicName = (TextView) convertView.findViewById(R.id.item_title);
 			viewHolder.mSingerName = (TextView) convertView.findViewById(R.id.item_artist);
 			convertView.setTag(viewHolder);

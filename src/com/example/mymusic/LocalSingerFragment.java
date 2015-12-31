@@ -50,7 +50,7 @@ public class LocalSingerFragment extends Fragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.local_singer_fragment, null);
+		return inflater.inflate(R.layout.fragment_local_singer, null);
 	}
 	
 	
@@ -84,6 +84,7 @@ public class LocalSingerFragment extends Fragment{
 					int position, long id) {
 				Log.d(TAG, "position :"+position+" singer :"+mMusicList.get(position).getSinger());
 				Intent intent = new Intent(getActivity(), LocalSingerSingleActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 				intent.putExtra("singerName", mMusicList.get(position).getSinger());
 				startActivity(intent);
 			}

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.example.mymusic.db.MusicDBHelper;
 import com.example.mymusic.event.RefreshLocalMusicFragmentEvent;
+import com.example.mymusic.event.RefreshPlayerEvent;
 import com.example.mymusic.service.BackGroundService;
 import com.example.mymusic.service.BackGroundService.PlayAndStopMusic;
 
@@ -42,39 +43,24 @@ public class LocalMusicFragment extends Fragment{
 	private BackGroundService.PlayAndStopMusic playAndStopMusicBinder;
 	private List<String> mMusicUri = new ArrayList<String>();
 	
-	private ServiceConnection connection = new ServiceConnection() {
-		
-		@Override
-		public void onServiceDisconnected(ComponentName name) {
-			Log.d(TAG, "onServiceDisconnected");
-		}
-		
-		@Override
-		public void onServiceConnected(ComponentName name, IBinder service) {
-			Log.d(TAG, "onServiceConnected");
-			playAndStopMusicBinder = (PlayAndStopMusic) service;
-		}
-	};
-	
 	public ListView getmLocalMusiclist() {
 		return mLocalMusiclist;
 	}
 	
 	public LocalMusicFragment(){
+		
 	}
 	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.local_music_fragment, null);
+		return inflater.inflate(R.layout.fragment_local_music, null);
 	}
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		Intent service = new Intent(getActivity(), BackGroundService.class);
-		getActivity().bindService(service, connection, getActivity().BIND_AUTO_CREATE);
 		mLocalMusiclist = (ListView) getActivity().findViewById(R.id.local_music_list);
 		mImageView = (ImageView) getActivity().findViewById(R.id.no_music_image);
 		if(MusicDBHelper.getInstance(getActivity()).queryLocalMusicCount()<=0){
@@ -89,7 +75,7 @@ public class LocalMusicFragment extends Fragment{
 					null, selection, null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
 			String[] From = {MediaStore.Audio.Media.TITLE,MediaStore.Audio.Media.ARTIST};
 			int[] To = {R.id.item_title,R.id.item_artist};
-			adapter = new SimpleCursorAdapter(getActivity(), R.layout.music_list_item, mCursor, From, To,CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+			adapter = new SimpleCursorAdapter(getActivity(), R.layout.item_music_list, mCursor, From, To,CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 			mLocalMusiclist.setAdapter(adapter);
 			
 			while(mCursor.moveToNext()){
@@ -104,10 +90,8 @@ public class LocalMusicFragment extends Fragment{
 					Log.d(TAG, "position :"+position+" id :"+id);
 					String itemUri = mMusicUri.get(position);
 					Log.d(TAG, "itemUri :"+itemUri);
-					if(playAndStopMusicBinder!=null){
-						playAndStopMusicBinder.initData(itemUri, mMusicUri, position);
-						playAndStopMusicBinder.playMusic();
-					}
+					RefreshPlayerEvent event = new RefreshPlayerEvent(itemUri, mMusicUri, position);
+					EventBus.getDefault().post(event);
 				}
 				
 			});
@@ -125,7 +109,6 @@ public class LocalMusicFragment extends Fragment{
 	public void onDestroy() {
 		super.onDestroy();
 		EventBus.getDefault().unregister(this);
-		getActivity().unbindService(connection);
 	}
 	
 	public void onEventMainThread(RefreshLocalMusicFragmentEvent event){

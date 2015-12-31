@@ -8,16 +8,8 @@ import com.example.mymusic.constant.DBConstant;
 import com.example.mymusic.db.MusicDBHelper;
 import com.example.mymusic.db.MusicDBHelper.RowMapper;
 import com.example.mymusic.model.Music;
-import com.example.mymusic.service.BackGroundService;
-import com.example.mymusic.service.BackGroundService.PlayAndStopMusic;
-
-import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,7 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class LocalSingerSingleActivity extends Activity {
+public class LocalSingerSingleActivity extends BaseActivity {
 	
 	private static final String TAG = "LocalSingerSingleActivity";
 	
@@ -39,28 +31,12 @@ public class LocalSingerSingleActivity extends Activity {
 	private List<String> mMusicUrl = new ArrayList<String>();
 	private MusicDBHelper dbHelper;
 	private LocalSingerSingleAdapter adapter;
-	private BackGroundService.PlayAndStopMusic playAndStopMusicBinder;
-	
-	private ServiceConnection connection = new ServiceConnection() {
-		
-		@Override
-		public void onServiceDisconnected(ComponentName name) {
-			
-		}
-		
-		@Override
-		public void onServiceConnected(ComponentName name, IBinder service) {
-			playAndStopMusicBinder = (PlayAndStopMusic) service;
-		}
-	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		Intent service = new Intent(this, BackGroundService.class);
-		bindService(service, connection, BIND_AUTO_CREATE);
-		setContentView(R.layout.local_singer_single_activity);
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_local_singer_single);
 		String singer = getIntent().getStringExtra("singerName");
 		mBackLayout = (LinearLayout) findViewById(R.id.ry_back_singer_single);
 		mSingerName = (TextView) findViewById(R.id.tv_singer_name);
@@ -101,6 +77,8 @@ public class LocalSingerSingleActivity extends Activity {
 				if(playAndStopMusicBinder!=null){
 					playAndStopMusicBinder.initData(mDataList.get(position).getmMusicUrl(), mMusicUrl, position);
 					playAndStopMusicBinder.playMusic();
+					mPlayBtn.setImageResource(R.drawable.player_pause);
+					setChecked(true);
 				}
 			}
 			
@@ -128,7 +106,6 @@ public class LocalSingerSingleActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		unbindService(connection);
 	}
 
 }

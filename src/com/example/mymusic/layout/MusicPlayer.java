@@ -11,7 +11,7 @@ public class MusicPlayer extends LinearLayout {
 
 	public MusicPlayer(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		LayoutInflater.from(context).inflate(R.layout.medioplayer_bar, this);
+		LayoutInflater.from(context).inflate(R.layout.custom_medioplayer_bar, this);
 	}
 
 }

@@ -14,7 +14,7 @@ public class LocalAlbumFragment extends Fragment implements OnClickListener{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.local_album_fragment, null);
+		return inflater.inflate(R.layout.fragment_local_album, null);
 	}
 	
 	@Override

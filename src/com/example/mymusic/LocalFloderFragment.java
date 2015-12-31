@@ -14,7 +14,7 @@ public class LocalFloderFragment extends Fragment implements OnClickListener{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.local_floder_fragment, null);
+		return inflater.inflate(R.layout.fragment_local_floder, null);
 	}
 	
 	@Override

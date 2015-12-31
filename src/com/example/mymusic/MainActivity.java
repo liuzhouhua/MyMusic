@@ -27,7 +27,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
-public class MainActivity extends FragmentActivity implements OnPageChangeListener, OnCheckedChangeListener {
+public class MainActivity extends BaseActivity implements OnPageChangeListener, OnCheckedChangeListener {
 
 	private String TAG = "MainActivity";
 	private ViewPager topTab;
@@ -35,26 +35,12 @@ public class MainActivity extends FragmentActivity implements OnPageChangeListen
 	private List<Fragment> fragments;
 	private RadioGroup radioGroupForTopTab;
 	private RadioButton newest,muzikland,search,me;
-	private PlayAndStopMusic palyAndStopMusicBinder;
-	
-	private ServiceConnection connection = new ServiceConnection() {
-		
-		@Override
-		public void onServiceDisconnected(ComponentName name) {
-			
-		}
-		
-		@Override
-		public void onServiceConnected(ComponentName name, IBinder service) {
-			palyAndStopMusicBinder = (PlayAndStopMusic) service;
-		}
-	};
 	
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         //��ʼ��
         initview();

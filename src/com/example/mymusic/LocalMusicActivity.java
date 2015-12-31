@@ -9,6 +9,7 @@ import com.example.mymusic.constant.DBConstant;
 import com.example.mymusic.db.MusicDBHelper;
 import com.example.mymusic.event.RefreshLocalMusicFragmentEvent;
 import com.example.mymusic.event.RefreshLocalSingerFragmentEvent;
+import com.example.mymusic.event.RefreshPlayerEvent;
 import com.example.mymusic.manager.MusicManager;
 
 import de.greenrobot.event.EventBus;
@@ -36,7 +37,7 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.SimpleCursorAdapter;
 
-public class LocalMusicActivity extends FragmentActivity implements OnPageChangeListener, OnCheckedChangeListener, OnClickListener{
+public class LocalMusicActivity extends BaseActivity implements OnPageChangeListener, OnCheckedChangeListener, OnClickListener{
 	
 	private final String TAG = "LocalMusicActivity";
 	private ViewPager mLocalMusicTab;
@@ -51,9 +52,9 @@ public class LocalMusicActivity extends FragmentActivity implements OnPageChange
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.localmusicactivity);
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_local_music);
 		initview();
 	}
 	
@@ -184,5 +185,25 @@ public class LocalMusicActivity extends FragmentActivity implements OnPageChange
 			break;
 		}
 	}
-
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EventBus.getDefault().register(this);
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EventBus.getDefault().unregister(this);
+	}
+	
+	public void onEventMainThread(RefreshPlayerEvent event){
+		if(playAndStopMusicBinder!=null){
+			playAndStopMusicBinder.initData(event.getCurrentUri(), event.getmMusicUri(), event.getPosition());
+			playAndStopMusicBinder.playMusic();
+			mPlayBtn.setImageResource(R.drawable.player_pause);
+			setChecked(true);
+		}
+	}
 }

@@ -1,48 +1,22 @@
 package com.example.mymusic.service;
 
-import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Semaphore;
-
-import com.example.mymusic.MainActivity;
-import com.example.mymusic.R;
-
-import android.app.ActivityManager;
-import android.app.ActivityManager.RunningAppProcessInfo;
 import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.PixelFormat;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Binder;
-import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 public class BackGroundService extends Service {
 	private static final String TAG  = "BackGroundService";
 	
 	private PlayAndStopMusic mBinder = new PlayAndStopMusic();
 	private MediaPlayer mPlayer= new MediaPlayer();
-	private WindowManager manager;
-	private WindowManager.LayoutParams params;
-	private View view;
-
-	private ImageButton mPlayBtn,mPlayNextBtn;
-	private TextView mSongName,mSinger;
-	private List<String> mPlayList;
+	private List<String> mPlayList = new ArrayList<String>();
 	private int currentPosition;
 	private String currentUrl;
 
@@ -52,15 +26,7 @@ public class BackGroundService extends Service {
 	@Override
 	public void onCreate() {
 		Log.d(TAG, "onCreate");
-		super.onCreate();
-		manager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
-		params = new WindowManager.LayoutParams();
-		view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.medioplayer_bar,null);
-		mPlayBtn = (ImageButton) view.findViewById(R.id.local_miniplayer_play);
-		mPlayNextBtn = (ImageButton) view.findViewById(R.id.local_miniplayer_next);
-		mSongName = (TextView) view.findViewById(R.id.local_miniplayer_song);
-		mSinger = (TextView) view.findViewById(R.id.local_miniplayer_artist);
-		
+		super.onCreate();	
 		mPlayer.setOnCompletionListener(new OnCompletionListener() {
 			
 			@Override
@@ -68,18 +34,8 @@ public class BackGroundService extends Service {
 				mBinder.playNextMusic();
 			}
 		});
-		
-		createView();
-		initBroadCastRecevier();
+
 	}
-	
-	private void initBroadCastRecevier() {
-    	IntentFilter intentFilter = new IntentFilter();
-    	intentFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
-    	intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
-    	registerReceiver(receiver, intentFilter);
-	}
-	
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
@@ -87,21 +43,11 @@ public class BackGroundService extends Service {
 		return super.onStartCommand(intent, flags, startId);
 	}
 	
-	public void createView(){
-		params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
-		params.flags |= WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-		params.gravity = Gravity.BOTTOM;
-		params.width = WindowManager.LayoutParams.MATCH_PARENT;
-		params.height = WindowManager.LayoutParams.WRAP_CONTENT;
-		params.format = PixelFormat.TRANSLUCENT;
-		manager.addView(view, params);
-	}
 	
 	@Override
 	public void onDestroy() {
 		Log.d(TAG, "onDestroy");
 		super.onDestroy();
-		unregisterReceiver(receiver);
 	}
 	
 	@Override
@@ -110,6 +56,7 @@ public class BackGroundService extends Service {
 	}
 	
 	public class PlayAndStopMusic extends Binder{
+		private boolean isPause = false;
 		public void initData(String uri,List<String> mList,int mPosition){
 			currentUrl = uri;
 			mPlayList = mList;
@@ -118,6 +65,14 @@ public class BackGroundService extends Service {
 		public void playMusic(){
 			if(mPlayer==null){
 				mPlayer = new MediaPlayer();
+			}
+			if(isPause){
+				mPlayer.start();
+				isPause = false;
+				return;
+			}
+			if(currentUrl==null){
+				return;
 			}
 			try {
 				mPlayer.reset();
@@ -136,11 +91,13 @@ public class BackGroundService extends Service {
 		}
 		public void pauseMusic(){
 			mPlayer.pause();
+			isPause  = true;
 		}
 		public void playNextMusic(){
 			currentPosition = currentPosition +1;
 			if(currentPosition<mPlayList.size()){
 				currentUrl = mPlayList.get(currentPosition);
+				isPause = false;
 				playMusic();
 			}
 		}
@@ -148,20 +105,17 @@ public class BackGroundService extends Service {
 			currentPosition = currentPosition -1;
 			if(currentPosition>=0){
 				currentUrl = mPlayList.get(currentPosition);
+				isPause = false;
 				playMusic();
 			}
 		}
 		public void stopMusic(){
+			isPause = false;
 			mPlayer.stop();
 		}
-	}
-	
-	
-	private BroadcastReceiver receiver = new BroadcastReceiver() {
 		
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			manager.removeView(view);
+		public boolean isDataNull(){
+			return currentUrl==null;
 		}
-	};
+	}
 }

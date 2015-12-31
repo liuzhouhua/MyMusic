@@ -27,7 +27,7 @@ public class MeFragment extends Fragment implements OnClickListener{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.mefragment, null);
+		return inflater.inflate(R.layout.fragment_me, null);
 	}
 	
 	@Override
@@ -66,6 +66,7 @@ public class MeFragment extends Fragment implements OnClickListener{
 			break;
 		case R.id.localmusic:
 			Intent intent = new Intent(this.getActivity(),LocalMusicActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 			startActivity(intent);
 			break;
 		case R.id.myfavor:

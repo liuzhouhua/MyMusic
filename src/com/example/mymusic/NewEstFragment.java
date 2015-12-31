@@ -13,7 +13,7 @@ public class NewEstFragment extends Fragment implements OnClickListener{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		return inflater.inflate(R.layout.newestfragment, null);
+		return inflater.inflate(R.layout.fragment_newest, null);
 	}
 	
 	@Override
