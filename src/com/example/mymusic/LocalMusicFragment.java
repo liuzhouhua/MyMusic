@@ -10,7 +10,6 @@ import com.example.mymusic.db.MusicDBHelper.RowMapper;
 import com.example.mymusic.event.RefreshLocalMusicFragmentEvent;
 import com.example.mymusic.event.RefreshPlayerEvent;
 import com.example.mymusic.model.Music;
-import com.example.mymusic.service.BackGroundService;
 import de.greenrobot.event.EventBus;
 
 import android.annotation.SuppressLint;

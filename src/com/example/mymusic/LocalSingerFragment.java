@@ -11,7 +11,6 @@ import com.example.mymusic.constant.DBConstant;
 import com.example.mymusic.db.MusicDBHelper;
 import com.example.mymusic.db.MusicDBHelper.RowMapper;
 import com.example.mymusic.event.RefreshLocalSingerFragmentEvent;
-import com.example.mymusic.model.Music;
 import com.example.mymusic.model.Singer;
 import com.example.mymusic.utils.PinyinComparator;
 import com.example.mymusic.view.SideBar;

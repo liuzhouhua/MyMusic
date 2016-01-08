@@ -6,19 +6,9 @@ import java.util.List;
 import com.example.mymusic.adapter.MainPageAdapter;
 import com.example.mymusic.constant.ApplicationContext;
 import com.example.mymusic.service.BackGroundService;
-import com.example.mymusic.service.BackGroundService.PlayAndStopMusic;
-
-import android.R.plurals;
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
@@ -146,6 +136,10 @@ public class MainActivity extends BaseActivity implements OnPageChangeListener, 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		unbindService(connection);
+		try {
+			unbindService(connection);
+		} catch (Exception e) {
+			
+		}
 	}
 }

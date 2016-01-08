@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="52dp">
+        
+        <LinearLayout
+            android:id="@+id/ly_back" 
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:background="@drawable/backbutton">
+         
+         <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/icon_arrow"
+                android:clickable="false" />
+        </LinearLayout>
+        
+        <TextView 
+            android:id="@+id/tv_title"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_default"
+            android:textSize="20sp"
+            android:layout_toRightOf="@id/ly_back"/>
+        
+        <TextView 
+            android:id="@+id/tv_artist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/artist_default"
+            android:textSize="15sp"
+            android:layout_toRightOf="@id/ly_back"
+            android:layout_below="@id/tv_title"/>
+        
+        <ImageView 
+            android:id="@+id/iv_favor"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/player_collection_normal"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"/>
+        
+    </RelativeLayout>
+    
+    
+    <RelativeLayout 
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <ImageView 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/singer_album"/>
+    </RelativeLayout>
+    
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        
+    </RelativeLayout>
+    
+
+</LinearLayout>

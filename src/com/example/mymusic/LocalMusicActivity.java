@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.mymusic.adapter.LocalMusicPageAdapter;
-import com.example.mymusic.constant.Constant;
-import com.example.mymusic.constant.DBConstant;
-import com.example.mymusic.db.MusicDBHelper;
 import com.example.mymusic.event.RefreshLocalMusicFragmentEvent;
 import com.example.mymusic.event.RefreshLocalSingerFragmentEvent;
 import com.example.mymusic.event.RefreshPlayerEvent;
@@ -15,14 +12,9 @@ import com.example.mymusic.manager.MusicManager;
 import de.greenrobot.event.EventBus;
 
 import android.app.ProgressDialog;
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
@@ -31,11 +23,9 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.SimpleCursorAdapter;
 
 public class LocalMusicActivity extends BaseActivity implements OnPageChangeListener, OnCheckedChangeListener, OnClickListener{
 	

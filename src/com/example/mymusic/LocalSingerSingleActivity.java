@@ -8,6 +8,8 @@ import com.example.mymusic.constant.DBConstant;
 import com.example.mymusic.db.MusicDBHelper;
 import com.example.mymusic.db.MusicDBHelper.RowMapper;
 import com.example.mymusic.model.Music;
+
+import de.greenrobot.event.EventBus;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
@@ -106,6 +108,18 @@ public class LocalSingerSingleActivity extends BaseActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EventBus.getDefault().register(this);
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EventBus.getDefault().unregister(this);
 	}
 
 }
