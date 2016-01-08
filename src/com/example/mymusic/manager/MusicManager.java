@@ -1,6 +1,5 @@
 package com.example.mymusic.manager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.content.ContentValues;
@@ -8,7 +7,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
 
-import com.example.mymusic.constant.Constant;
+import com.example.mymusic.R;
 import com.example.mymusic.constant.DBConstant;
 import com.example.mymusic.db.MusicDBHelper;
 import com.example.mymusic.db.MusicDBHelper.RowMapper;
@@ -24,9 +23,15 @@ public class MusicManager {
 	private Context mContext;
 	private MusicDBHelper mDBHelper = null;
 	
+	private boolean isPlaying = false;
+	private String currentMusicName = null;
+	private String currentMusicSinger = null;
+	
 	public MusicManager(Context context) {
 		this.mContext = context;
 		mDBHelper = MusicDBHelper.getInstance(context);
+		currentMusicName = mContext.getString(R.string.title_default);
+		currentMusicSinger = mContext.getString(R.string.artist_default);
 	}
 
 	public static MusicManager getInstance(Context context){
@@ -140,5 +145,29 @@ public class MusicManager {
 			}
 			
 		}, "select * from "+ DBConstant.TABLE_ARTIST +" where local_singer=?", new String[]{signer});
+	}
+
+	public boolean isPlaying() {
+		return isPlaying;
+	}
+
+	public void setPlaying(boolean isPlaying) {
+		this.isPlaying = isPlaying;
+	}
+
+	public String getCurrentMusicName() {
+		return currentMusicName;
+	}
+
+	public void setCurrentMusicName(String currentMusicName) {
+		this.currentMusicName = currentMusicName;
+	}
+
+	public String getCurrentMusicSinger() {
+		return currentMusicSinger;
+	}
+
+	public void setCurrentMusicSinger(String currentMusicSinger) {
+		this.currentMusicSinger = currentMusicSinger;
 	}
 }

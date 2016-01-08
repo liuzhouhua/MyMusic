@@ -200,7 +200,7 @@ public class LocalMusicActivity extends BaseActivity implements OnPageChangeList
 	
 	public void onEventMainThread(RefreshPlayerEvent event){
 		if(playAndStopMusicBinder!=null){
-			playAndStopMusicBinder.initData(event.getCurrentUri(), event.getmMusicUri(), event.getPosition());
+			playAndStopMusicBinder.initData(event.getCurrentUri(), event.getmMusics(), event.getPosition());
 			playAndStopMusicBinder.playMusic();
 			mPlayBtn.setImageResource(R.drawable.player_pause);
 			setChecked(true);

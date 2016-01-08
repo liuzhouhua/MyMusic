@@ -3,15 +3,17 @@ package com.example.mymusic.event;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.mymusic.model.Music;
+
 public class RefreshPlayerEvent {
 
 	private String currentUri="";
-	private List<String> mMusicUri = new ArrayList<String>();
+	private List<Music> mMusics = new ArrayList<Music>();
 	private int position;
 	
-	public RefreshPlayerEvent(String currentUri,List<String> mMusicUri,int position) {
+	public RefreshPlayerEvent(String currentUri,List<Music> mMusics,int position) {
 		this.currentUri = currentUri;
-		this.mMusicUri = mMusicUri;
+		this.mMusics = mMusics;
 		this.position = position;
 	}
 	public String getCurrentUri() {
@@ -20,11 +22,11 @@ public class RefreshPlayerEvent {
 	public void setCurrentUri(String currentUri) {
 		this.currentUri = currentUri;
 	}
-	public List<String> getmMusicUri() {
-		return mMusicUri;
+	public List<Music> getmMusics() {
+		return mMusics;
 	}
-	public void setmMusicUri(List<String> mMusicUri) {
-		this.mMusicUri = mMusicUri;
+	public void setmMusics(List<Music> mMusics) {
+		this.mMusics = mMusics;
 	}
 	public int getPosition() {
 		return position;

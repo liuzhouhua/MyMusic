@@ -3,33 +3,28 @@ package com.example.mymusic;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.mymusic.adapter.LocalSingerSingleAdapter;
+import com.example.mymusic.constant.DBConstant;
 import com.example.mymusic.db.MusicDBHelper;
+import com.example.mymusic.db.MusicDBHelper.RowMapper;
 import com.example.mymusic.event.RefreshLocalMusicFragmentEvent;
 import com.example.mymusic.event.RefreshPlayerEvent;
+import com.example.mymusic.model.Music;
 import com.example.mymusic.service.BackGroundService;
-import com.example.mymusic.service.BackGroundService.PlayAndStopMusic;
-
 import de.greenrobot.event.EventBus;
 
 import android.annotation.SuppressLint;
-import android.content.ComponentName;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 
 @SuppressLint("NewApi")
 public class LocalMusicFragment extends Fragment{
@@ -38,10 +33,9 @@ public class LocalMusicFragment extends Fragment{
 
 	public ListView mLocalMusiclist;
 	private ImageView mImageView;
-	public SimpleCursorAdapter adapter;
-	private Cursor mCursor;
-	private BackGroundService.PlayAndStopMusic playAndStopMusicBinder;
-	private List<String> mMusicUri = new ArrayList<String>();
+	private LocalSingerSingleAdapter adapter;
+	private List<Music> mMusics = new ArrayList<Music>();
+	private MusicDBHelper dbHelper;
 	
 	public ListView getmLocalMusiclist() {
 		return mLocalMusiclist;
@@ -61,6 +55,7 @@ public class LocalMusicFragment extends Fragment{
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		dbHelper = MusicDBHelper.getInstance(getActivity());
 		mLocalMusiclist = (ListView) getActivity().findViewById(R.id.local_music_list);
 		mImageView = (ImageView) getActivity().findViewById(R.id.no_music_image);
 		if(MusicDBHelper.getInstance(getActivity()).queryLocalMusicCount()<=0){
@@ -70,33 +65,29 @@ public class LocalMusicFragment extends Fragment{
 			mImageView.setVisibility(View.GONE);
 			mLocalMusiclist.setVisibility(View.VISIBLE);
 		}
-			String selection = MediaStore.Audio.Media.DURATION +">30000";
-			mCursor = getActivity().getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-					null, selection, null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
-			String[] From = {MediaStore.Audio.Media.TITLE,MediaStore.Audio.Media.ARTIST};
-			int[] To = {R.id.item_title,R.id.item_artist};
-			adapter = new SimpleCursorAdapter(getActivity(), R.layout.item_music_list, mCursor, From, To,CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
-			mLocalMusiclist.setAdapter(adapter);
-			
-			while(mCursor.moveToNext()){
-				mMusicUri.add(mCursor.getString(mCursor.getColumnIndex(MediaStore.Audio.Media.DATA)));
+
+		mMusics = scanDBForMusicList();
+		
+		adapter = new LocalSingerSingleAdapter(getActivity(), mMusics);
+		
+		mLocalMusiclist.setAdapter(adapter);
+		
+		mLocalMusiclist.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Log.d(TAG, "position :" + position + " id :" + id);
+				String itemUri = mMusics.get(position).getmMusicUrl();
+				Log.d(TAG, "itemUri :" + itemUri);
+				RefreshPlayerEvent event = new RefreshPlayerEvent(itemUri,
+						mMusics, position);
+				EventBus.getDefault().post(event);
 			}
-			
-			mLocalMusiclist.setOnItemClickListener(new OnItemClickListener() {
-				
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view,
-						int position, long id) {
-					Log.d(TAG, "position :"+position+" id :"+id);
-					String itemUri = mMusicUri.get(position);
-					Log.d(TAG, "itemUri :"+itemUri);
-					RefreshPlayerEvent event = new RefreshPlayerEvent(itemUri, mMusicUri, position);
-					EventBus.getDefault().post(event);
-				}
-				
-			});
-			
-			EventBus.getDefault().register(this);
+
+		});
+
+		EventBus.getDefault().register(this);
 		
 	}
 	
@@ -109,6 +100,23 @@ public class LocalMusicFragment extends Fragment{
 	public void onDestroy() {
 		super.onDestroy();
 		EventBus.getDefault().unregister(this);
+	}
+	
+	public List<Music> scanDBForMusicList(){
+		List<Music> listRaw = new ArrayList<Music>();
+		listRaw = dbHelper.queryForList(new RowMapper<Music>() {
+
+			@Override
+			public Music mapRow(Cursor cursor, int count) {
+				Music Music = new Music();
+				Music.setmMusicSinger(cursor.getString(cursor.getColumnIndex(DBConstant.LOCAL_ARTIST)));
+				Music.setmMusicName(cursor.getString(cursor.getColumnIndex(DBConstant.LOCAL_NAME)));
+				Music.setmMusicUrl(cursor.getString(cursor.getColumnIndex(DBConstant.LOCAL_PATH)));
+				return Music;
+			}
+			
+		}, "select * from "+DBConstant.TABLE_LOCALMUSIC, null);
+		return listRaw;
 	}
 	
 	public void onEventMainThread(RefreshLocalMusicFragmentEvent event){

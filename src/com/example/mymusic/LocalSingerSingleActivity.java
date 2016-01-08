@@ -75,7 +75,7 @@ public class LocalSingerSingleActivity extends BaseActivity {
 					int position, long id) {
 				Log.d(TAG, " url :"+mDataList.get(position).getmMusicUrl());
 				if(playAndStopMusicBinder!=null){
-					playAndStopMusicBinder.initData(mDataList.get(position).getmMusicUrl(), mMusicUrl, position);
+					playAndStopMusicBinder.initData(mDataList.get(position).getmMusicUrl(), mDataList, position);
 					playAndStopMusicBinder.playMusic();
 					mPlayBtn.setImageResource(R.drawable.player_pause);
 					setChecked(true);

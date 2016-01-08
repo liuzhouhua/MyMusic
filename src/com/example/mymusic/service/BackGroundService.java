@@ -3,7 +3,15 @@ package com.example.mymusic.service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.mymusic.event.RefreshPlayerViewEvent;
+import com.example.mymusic.manager.MusicManager;
+import com.example.mymusic.model.Music;
+
+import de.greenrobot.event.EventBus;
+
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -16,9 +24,10 @@ public class BackGroundService extends Service {
 	
 	private PlayAndStopMusic mBinder = new PlayAndStopMusic();
 	private MediaPlayer mPlayer= new MediaPlayer();
-	private List<String> mPlayList = new ArrayList<String>();
+	private List<Music> mPlayList = new ArrayList<Music>();
 	private int currentPosition;
 	private String currentUrl;
+	private Context mContext;
 
 	public BackGroundService() {
 	}
@@ -27,6 +36,7 @@ public class BackGroundService extends Service {
 	public void onCreate() {
 		Log.d(TAG, "onCreate");
 		super.onCreate();	
+		mContext = getApplicationContext();
 		mPlayer.setOnCompletionListener(new OnCompletionListener() {
 			
 			@Override
@@ -57,7 +67,7 @@ public class BackGroundService extends Service {
 	
 	public class PlayAndStopMusic extends Binder{
 		private boolean isPause = false;
-		public void initData(String uri,List<String> mList,int mPosition){
+		public void initData(String uri,List<Music> mList,int mPosition){
 			currentUrl = uri;
 			mPlayList = mList;
 			currentPosition = mPosition;
@@ -68,6 +78,7 @@ public class BackGroundService extends Service {
 			}
 			if(isPause){
 				mPlayer.start();
+				MusicManager.getInstance(mContext).setPlaying(true);
 				isPause = false;
 				return;
 			}
@@ -79,6 +90,8 @@ public class BackGroundService extends Service {
 				mPlayer.setDataSource(currentUrl);
 				mPlayer.prepare();
 				mPlayer.start();
+				EventBus.getDefault().post(new RefreshPlayerViewEvent(mPlayList.get(currentPosition)));
+				MusicManager.getInstance(mContext).setPlaying(true);
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
 			} catch (SecurityException e) {
@@ -91,12 +104,13 @@ public class BackGroundService extends Service {
 		}
 		public void pauseMusic(){
 			mPlayer.pause();
+			MusicManager.getInstance(mContext).setPlaying(false);
 			isPause  = true;
 		}
 		public void playNextMusic(){
 			currentPosition = currentPosition +1;
 			if(currentPosition<mPlayList.size()){
-				currentUrl = mPlayList.get(currentPosition);
+				currentUrl = mPlayList.get(currentPosition).getmMusicUrl();
 				isPause = false;
 				playMusic();
 			}
@@ -104,7 +118,7 @@ public class BackGroundService extends Service {
 		public void playbeforeMusic(){
 			currentPosition = currentPosition -1;
 			if(currentPosition>=0){
-				currentUrl = mPlayList.get(currentPosition);
+				currentUrl = mPlayList.get(currentPosition).getmMusicUrl();
 				isPause = false;
 				playMusic();
 			}
@@ -112,6 +126,7 @@ public class BackGroundService extends Service {
 		public void stopMusic(){
 			isPause = false;
 			mPlayer.stop();
+			MusicManager.getInstance(mContext).setPlaying(false);
 		}
 		
 		public boolean isDataNull(){

@@ -72,7 +72,7 @@ public class LocalSingerFragment extends Fragment{
 			}
 		});
 		dbHelper = MusicDBHelper.getInstance(getActivity());
-		mMusicList = scanDBForList();
+		mMusicList = scanDBForSingerList();
 		comparator = new PinyinComparator(0);
 		Collections.sort(mMusicList, comparator);
 		adapter = new LocalSingerAdapter(getActivity(), mMusicList);
@@ -93,7 +93,7 @@ public class LocalSingerFragment extends Fragment{
 		EventBus.getDefault().register(this);
 	}
 	
-	public List<Singer> scanDBForList(){
+	public List<Singer> scanDBForSingerList(){
 		List<Singer> listRaw = new ArrayList<Singer>();
 		listRaw = dbHelper.queryForList(new RowMapper<Singer>() {
 
@@ -140,7 +140,7 @@ public class LocalSingerFragment extends Fragment{
 	}
 
 	public void onEventMainThread(RefreshLocalSingerFragmentEvent event){
-		mMusicList = scanDBForList();
+		mMusicList = scanDBForSingerList();
 		Collections.sort(mMusicList, comparator);
 		adapter = new LocalSingerAdapter(getActivity(), mMusicList);
 		mSingerList.setAdapter(adapter);

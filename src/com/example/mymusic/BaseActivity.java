@@ -1,5 +1,7 @@
 package com.example.mymusic;
 
+import com.example.mymusic.event.RefreshPlayerViewEvent;
+import com.example.mymusic.manager.MusicManager;
 import com.example.mymusic.service.BackGroundService;
 import com.example.mymusic.service.BackGroundService.PlayAndStopMusic;
 
@@ -10,6 +12,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +24,7 @@ import android.widget.TextView;
 import android.widget.FrameLayout.LayoutParams;
 
 public class BaseActivity extends FragmentActivity {
+	private static final String TAG = "BaseActivity";
 	private FrameLayout mContentContainer;
 	public View mMusicPlayer;
 	public Context mContext;
@@ -61,6 +65,7 @@ public class BaseActivity extends FragmentActivity {
 	}
 
 
+
 	private void initListener() {
 		mPlayBtn.setOnClickListener(new OnClickListener() {
 			
@@ -93,6 +98,22 @@ public class BaseActivity extends FragmentActivity {
 		});
 	}
 
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if(MusicManager.getInstance(mContext).isPlaying()){
+			mPlayBtn.setImageResource(R.drawable.player_pause);
+			mSinger.setText(MusicManager.getInstance(mContext).getCurrentMusicSinger());
+			mSongName.setText(MusicManager.getInstance(mContext).getCurrentMusicName());
+			setChecked(true);
+		}else{
+			mPlayBtn.setImageResource(R.drawable.player_play);
+			mSinger.setText(MusicManager.getInstance(mContext).getCurrentMusicSinger());
+			mSongName.setText(MusicManager.getInstance(mContext).getCurrentMusicName());
+			setChecked(true);
+		}
+	}
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
@@ -123,5 +144,15 @@ public class BaseActivity extends FragmentActivity {
 
 	public void setChecked(boolean isChecked) {
 		this.isChecked = isChecked;
+	}
+	
+	
+	public void onEventMainThread(RefreshPlayerViewEvent event){
+		if(event!=null){
+			mSongName.setText(event.getMusic().getmMusicName());
+			mSinger.setText(event.getMusic().getmMusicSinger());
+			MusicManager.getInstance(mContext).setCurrentMusicName(event.getMusic().getmMusicName());
+			MusicManager.getInstance(mContext).setCurrentMusicSinger(event.getMusic().getmMusicSinger());
+		}
 	}
 }

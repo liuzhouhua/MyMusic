@@ -22,15 +22,18 @@
         
         <activity
             android:name="com.example.mymusic.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.mymusic.LocalMusicActivity"></activity>
-        <activity android:name="com.example.mymusic.LocalSingerSingleActivity"></activity>
+        <activity android:name="com.example.mymusic.LocalMusicActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name="com.example.mymusic.LocalSingerSingleActivity"
+            android:screenOrientation="portrait"></activity>
         
         <service android:name="com.example.mymusic.service.BackGroundService"></service>
     </application>
