@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        
+        <LinearLayout
+            android:id="@+id/ly_back" 
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:background="@drawable/backbutton">
+         
+         <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/icon_arrow"
+                android:clickable="false" />
+        </LinearLayout>
+
+    <TextView 
+        android:id="@+id/title_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/local_music_text"
+        android:textColor="#000000"
+        android:textSize="22sp"/>
+    
+    <Button
+        android:id="@+id/title_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:layout_marginRight="10dp"
+        android:text="@string/scan"
+        android:textColor="#ff0f1b"
+        android:textSize="18sp"
+        android:background="@drawable/edit_text"/>
+    </LinearLayout>
+    
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:src="@drawable/line"
+        android:background="#ccced1"/>
+    
+     <RadioGroup 
+        android:id="@+id/music_taball"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:orientation="horizontal">
+        
+        <RadioButton 
+            android:id="@+id/songs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            style="@style/main_tab_top"
+            android:checked="true"
+            android:text="@string/songs"
+            android:drawableBottom="@drawable/music_tab"
+            android:textColor="@color/tab_color"/>
+        <RadioButton 
+            android:id="@+id/singer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            style="@style/main_tab_top"
+            android:text="@string/singer"
+            android:drawableBottom="@drawable/music_tab"
+            android:textColor="@color/tab_color"/>
+        <RadioButton 
+            android:id="@+id/sepcial"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            style="@style/main_tab_top"
+            android:text="@string/special"
+            android:drawableBottom="@drawable/music_tab"
+            android:textColor="@color/tab_color"/>
+        <RadioButton 
+            android:id="@+id/folder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            style="@style/main_tab_top"
+            android:text="@string/folder"
+            android:drawableBottom="@drawable/music_tab"
+            android:textColor="@color/tab_color"/>
+        
+    </RadioGroup>
+    
+     <android.support.v4.view.ViewPager
+        android:id="@+id/pager_local"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="43dp">
+    </android.support.v4.view.ViewPager>"
+    
+</LinearLayout>
+<!-- From: file:/E:/Documents/GitHub/MyMusic/res/layout/activity_local_music.xml -->

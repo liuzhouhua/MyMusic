@@ -1,0 +1,72 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+     >
+
+    <RadioGroup 
+        android:id="@+id/music_taball"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+        
+        <RadioButton 
+            android:id="@+id/newest"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:layout_weight="1"
+            style="@style/main_tab_top"
+            android:checked="true"
+            android:text="@string/newest"
+            android:drawableBottom="@drawable/music_tab"
+            android:textColor="@color/tab_color"/>
+        <RadioButton 
+            android:id="@+id/muzikland"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:layout_weight="1"
+            style="@style/main_tab_top"
+            android:text="@string/muzikland"
+            android:drawableBottom="@drawable/music_tab"
+            android:textColor="@color/tab_color"/>
+        <RadioButton 
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:layout_weight="1"
+            style="@style/main_tab_top"
+            android:text="@string/search"
+            android:drawableBottom="@drawable/music_tab"
+            android:textColor="@color/tab_color"/>
+        <RadioButton 
+            android:id="@+id/me"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:layout_weight="1"
+            style="@style/main_tab_top"
+            android:text="@string/me"
+            android:drawableBottom="@drawable/music_tab"
+            android:textColor="@color/tab_color"/>
+        
+    </RadioGroup>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="43dp">
+    </android.support.v4.view.ViewPager>
+    <!--  
+    <com.example.mymusic.layout.MusicPlayer
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+    </com.example.mymusic.layout.MusicPlayer>
+-->
+</LinearLayout>
+<!-- From: file:/E:/Documents/GitHub/MyMusic/res/layout/activity_main.xml -->

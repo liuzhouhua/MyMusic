@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/E:/Documents/GitHub/MyMusic/res/values/color.xml -->
+    <eat-comment/>
+    <color name="balck">#000000</color>
+    <color name="buttongrey">#f0f0f0</color>
+    <color name="layoutbackground">#f6f7f8</color>
+    <color name="lightgrey">#FFDCDCDC</color>
+    <color name="white">#ffffff</color>
+    <!-- From: file:/E:/Documents/GitHub/MyMusic/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <!-- From: file:/E:/Documents/GitHub/MyMusic/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="action_settings">Settings</string>
+    <string name="app_name">MyMusic</string>
+    <string name="artist_default">让音乐跟我走</string>
+    <string name="download_music">下载歌曲</string>
+    <string name="folder">文件夹</string>
+    <string name="import_music">导入歌曲中，请稍后...</string>
+    <string name="local_music_count">0首</string>
+    <string name="local_music_text">本地音乐</string>
+    <string name="me">我的音乐</string>
+    <string name="muzikland">音乐架</string>
+    <string name="myfavor">我喜欢的</string>
+    <string name="mymuzikland">我的歌单</string>
+    <string name="newest">最近播放</string>
+    <string name="scan">扫描</string>
+    <string name="sdcard_full_app_cant_use_normal">SD卡空间已满，可能影响本软件的正常使用</string>
+    <string name="sdcard_full_your_msg_can_not_display">SD卡空间已满，您的消息无法正常显示</string>
+    <string name="search">搜索</string>
+    <string name="singer">歌手</string>
+    <string name="songs">音乐</string>
+    <string name="special">专辑</string>
+    <string name="title_default">欢迎来到我的音乐</string>
+    <string name="unit">首</string>
+    <string name="user_text">现在登录，高品质免费</string>
+    <!-- From: file:/E:/Documents/GitHub/MyMusic/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+    <style name="main_tab_top">
+        <item name="android:textSize">20.0sp</item>
+        <item name="android:textColor">@color/balck</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:padding">5dip</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:button">@null</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_weight">1.0</item>
+    </style>
+</resources>

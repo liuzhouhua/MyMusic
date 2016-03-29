@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="horizontal" >
+    
+        <Button
+            android:id="@+id/titile_back"
+            android:layout_width="15dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/backbutton" />
+
+    <TextView 
+        android:id="@+id/title_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/local_music_text"
+        android:textColor="#000000"
+        android:textSize="22sp"/>
+    
+    <TextView 
+        android:id="@+id/title_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:layout_marginRight="10dp"
+        android:text="@string/scan"
+        android:textColor="#ff0f1b"
+        android:textSize="18sp"
+        android:background="@drawable/edit_text"/>
+
+</LinearLayout>
+<!-- From: file:/E:/Documents/GitHub/MyMusic/res/layout/custom_globa_ltitle.xml -->
